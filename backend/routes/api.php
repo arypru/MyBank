@@ -19,6 +19,8 @@ use App\Http\Controllers\Api\UserController;
 
 //Persona
 Route::apiResource('personas', PersonaController::class);
+Route::post('/verificar-dni/{dni}', [PersonaController::class, 'verificar_dni']);
+
 Route::apiResource('users', UserController::class);
 
 /**Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
