@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('apellido');
             $table->integer('dni')->unique();
             $table->string('celular');
-            $table->integer('cuil')->unique();
+            $table->bigInteger('cuil')->unique();
             $table->string('direccion');
+            $table->boolean('baja')->default(false);
         });
     }
 
