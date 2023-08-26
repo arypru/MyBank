@@ -51,7 +51,7 @@ class PersonaController extends Controller
 
     public function show(string $id)
     {
-        $unaPersona = DB::table('personas')->where('id', $id)->get();
+        $unaPersona = DB::table('personas')->whereRaw('id =' . $id )->get();
         return response()->json($unaPersona,200);
     }
 
@@ -110,9 +110,7 @@ class PersonaController extends Controller
      */
     public function destroy(string $id)
     {
-        $personaDelete = DB::table('persona')
-            ->where('id', $id)
-            ->update(['baja' => true]);
+        $personaDelete = DB::table('persona')->whereRaw('id =' . $id )->update(['baja' => true]);
 
         return response()->json([
             'persona_id' => $personaDelete,
