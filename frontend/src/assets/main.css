@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz@10..48&family=Darker+Grotesque:wght@500&family=Figtree:wght@300&family=Josefin+Sans&display=swap');
+
+html, body {
+    font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+#app {
+    font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+.red{
+    color: #ED254E;
+}
+
+.yellow{
+    color: #F9DC5C;
+}
+
+.cream{
+    color: #F4FFFD;
+}
+
+.blue{
+    color: #011936;
+}
+
+.charcol{
+    color:#465362;
+}
