@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a542b86-37c7-4911-b45d-6362576b56d6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/VTextFile.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/HomeView.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/VBotonPrimario.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +47,7 @@
       <option name="presentableId" value="Default" />
       <updated>1693261384511</updated>
       <workItem from="1693261385584" duration="5641000" />
-      <workItem from="1693267279611" duration="2058000" />
+      <workItem from="1693267279611" duration="5246000" />
     </task>
     <servers />
   </component>
