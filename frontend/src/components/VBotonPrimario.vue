@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="black--text" color="amber accent-2" large rounded >
+  <v-btn class="black--text" color="amber accent-2" large rounded block>
     {{ textoBoton }}
     <v-icon right>{{ textoIcon }}</v-icon>
   </v-btn>
