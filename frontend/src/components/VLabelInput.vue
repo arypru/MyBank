@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>{{ textoLabel }}</h4>
+    <h3>{{ textoLabel }}</h3>
   </div>
 </template>
 
@@ -16,8 +16,8 @@ export default {
 </script>
 
 <style>
-h4{
-  letter-spacing: 0.06em;
+h3{
+  letter-spacing: 0.08em;
   font-weight: 400;
 }
 </style>
