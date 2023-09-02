@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a542b86-37c7-4911-b45d-6362576b56d6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/views/VLogin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/VBotonSecundario.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/VBotonText.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/VLogo.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assets/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/VBotonPrimario.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VBotonPrimario.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/VLabelInput.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VLabelInput.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/VTextFile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VTextFile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VTitulo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VTitulo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/VLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/VLogin.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +56,8 @@
       <updated>1693261384511</updated>
       <workItem from="1693261385584" duration="5641000" />
       <workItem from="1693267279611" duration="5246000" />
-      <workItem from="1693338875711" duration="9080000" />
+      <workItem from="1693338875711" duration="11429000" />
+      <workItem from="1693608560781" duration="11742000" />
     </task>
     <servers />
   </component>

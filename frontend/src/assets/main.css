@@ -5,7 +5,7 @@ html, body {
 }
 
 #app {
-    background:url("./images/5566879.jpg");
+    background:url("./images/Fondo.jpg");
     color: white;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -24,7 +24,7 @@ html, body {
 }
 
 .yellow{
-    color: #F9DC5C;
+    color: #CE7636;
 }
 
 .cream{
