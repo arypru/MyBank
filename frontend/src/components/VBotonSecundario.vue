@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="black--text" color="teal lighten-1" large rounded block outlined>
+  <v-btn :to=linkSecundario class="black--text" color="teal lighten-1" large rounded block outlined>
     <h3>{{ textoBoton }}</h3>
     <v-icon right>{{ textoIcon }}</v-icon>
   </v-btn>
@@ -14,6 +14,11 @@ export default {
     },
 
     textoIcon: {
+      type: String,
+      required: true,
+    },
+
+    linkSecundario: {
       type: String,
       required: true,
     }
