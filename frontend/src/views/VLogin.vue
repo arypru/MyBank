@@ -3,7 +3,7 @@
     <v-row align="center" justify="center" style="height:95vh" no-gutters>
         <v-col cols="12" lg="4" md="6">
           <v-card  class="px-12 py-10 rounded-xl">
-            <v-logo/>
+            <v-logo heightProp="180" widthProp="220"/>
             <v-label-input textoLabel="Usuario"/>
             <v-text-file icon="mdi-account" placeholderText="Ingrese su usuario"/>
 
@@ -14,10 +14,8 @@
               <v-boton-text class="block" :texto=botontext icontext="mdi-cursor-default-click"/>
 
               <v-divider inset></v-divider>
-
               <h4 class="text-center my-4"> <pre>{{quieroregistrarmetext}}</pre></h4>
-
-              <v-boton-secundario textoBoton = "Quiero registrarme" textoIcon="mdi-menu-right"/>
+              <v-boton-secundario linkSecundario="/registrarse" textoBoton = "Quiero registrarme" textoIcon="mdi-menu-right"/>
           </v-card>
         </v-col>
 
@@ -44,7 +42,7 @@ export default {
     return {
       imagenPortada: imagenLogin,
       botontext: `Si olvidaste tu contraseña` + `\n` + `Hace clic aca`,
-      quieroregistrarmetext:`¿Qué esperas para registrarte?` + `\n` +`Te tomara solo unos minutos` ,
+      quieroregistrarmetext:`¿Qué esperas para registrarte?` + `\n` +`Te tomara solo unos minutos`
     }
   }
 }
