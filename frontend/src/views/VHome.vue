@@ -1,12 +1,7 @@
 <template>
   <div>
-    <v-app-bar max-width="auto" color="white" elevation="0" file>
-      <v-row class="d-flex flex-row justify-space-between align-center px-8">
-        <v-img  max-height="50" max-width="110" src="../assets/images/logosintexto.png" />
-        <v-item-navbar/>
-        <v-dropdown/>
-      </v-row>
-    </v-app-bar>
+
+    <v-navbar/>
 
     <v-container fluid style="background: white" class="mt-8">
       <div>
@@ -244,10 +239,9 @@
 
 <script>
 import VBotonPrimario from "../components/VBotonPrimario";
-import VDropdown from "../components/VDropdown";
-import VItemNavbar from "../components/VItemNavbar";
+import VNavbar from "../components/VNavbar"
 
 export default {
-  components:{VBotonPrimario,VDropdown,VItemNavbar}
+  components:{VBotonPrimario,VNavbar}
 }
 </script>
