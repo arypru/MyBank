@@ -1,14 +1,9 @@
 <template>
   <div>
     <v-app-bar max-width="auto" color="white" elevation="0" file>
-      <v-row class="d-flex flex-row justify-space-between align-center">
+      <v-row class="d-flex flex-row justify-space-between align-center px-8">
         <v-img  max-height="50" max-width="110" src="../assets/images/logosintexto.png" />
-        <div class="d-flex flex-row">
-          <p>Inicio</p>
-          <p>Transferencias</p>
-          <p>Productos</p>
-          <p>Tarjetas</p>
-        </div>
+        <v-item-navbar/>
         <v-dropdown/>
       </v-row>
     </v-app-bar>
@@ -249,9 +244,10 @@
 
 <script>
 import VBotonPrimario from "../components/VBotonPrimario";
-import VDropdown from "../components/VDropdown"
+import VDropdown from "../components/VDropdown";
+import VItemNavbar from "../components/VItemNavbar";
 
 export default {
-  components:{VBotonPrimario,VDropdown}
+  components:{VBotonPrimario,VDropdown,VItemNavbar}
 }
 </script>
