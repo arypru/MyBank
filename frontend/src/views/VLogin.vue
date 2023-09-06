@@ -1,6 +1,6 @@
 <template>
 
-    <v-row align="center" justify="center" style="height:95vh" no-gutters>
+    <v-row class="px-12" align="center" justify="center" style="height:95vh" no-gutters>
         <v-col cols="12" lg="4" md="6">
           <v-card  class="px-12 py-10 rounded-xl">
             <v-logo heightProp="180" widthProp="220"/>

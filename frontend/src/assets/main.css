@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Bricolage Grotesque', sans-serif;
+
 }
 
 #app {
@@ -13,9 +14,6 @@ html, body {
     background-size: cover;
     width: 100%;
     height:100vh;
-}
-
-#app {
     font-family: 'Bricolage Grotesque', sans-serif;
 }
 
