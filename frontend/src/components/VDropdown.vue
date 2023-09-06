@@ -1,0 +1,60 @@
+<template>
+  <div class="text-center">
+    <v-menu rounded="b-xl" offset-y>
+      <template v-slot:activator="{ on, attrs }">
+          <v-btn text
+              v-ripple="false"
+              color="transparent"
+              elevation="0"
+              file
+              v-bind="attrs"
+              v-on="on"
+          >
+            <v-hover v-slot="{ hover }" >
+              <span class="black--text font" :class="hover ? 'teal--text lighten-1--text' : 'black--text'">
+                {{ nombre }}<v-icon >mdi-menu-down</v-icon>
+              </span>
+            </v-hover>
+
+          </v-btn>
+      </template>
+
+      <v-list>
+        <v-list-item
+            link
+            v-for="item in items"
+            :key="item.titulo"
+            :href="item.link"
+        >
+          <v-hover v-slot="{ hover }" >
+            <v-list-item-title :class="hover ? 'teal--text lighten-1--text' : 'black--text'" class=" py-3">
+              {{ item.titulo}}
+            </v-list-item-title>
+          </v-hover>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </div>
+</template>
+
+<script>
+export default {
+  data: () => ({
+    nombre: 'pepe argentino',
+    items: [
+      { titulo: 'Mis Datos' , url:''},
+      { titulo: 'Salir', url:'' },
+    ],
+  }),
+}
+</script>
+
+<style scoped>
+.font{
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+.v-menu__content {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+</style>
