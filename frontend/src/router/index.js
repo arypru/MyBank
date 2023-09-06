@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView'
 import VLogin from '../views/VLogin'
 import VRegistro from '../views/VRegistro'
+import VHome from '../views/VHome'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView,
+    name: 'Home',
+    component: VHome,
     meta: { title: 'Inicio'}
   },
 
@@ -26,7 +26,7 @@ const routes = [
         name: 'Registro',
         component: VRegistro,
         meta: { title: 'Registro'}
-    }
+    },
 ]
 
 const router = new VueRouter({
