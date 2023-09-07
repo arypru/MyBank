@@ -1,20 +1,17 @@
 <template>
   <div>
-
     <v-navbar/>
 
-    <v-container fluid style="background: white" class="mt-8">
+    <v-container  style="background: white" class="mt-8">
       <div>
-        <h2 style="color:black">Transferencias</h2>
-        <v-divider></v-divider>
+        <v-titulo-home titulo="Transferencias"/>
         <v-boton-primario textoBoton="Nueva Transferencia"/>
         <v-boton-primario textoBoton="Ver Transferencias"/>
         <v-boton-primario textoBoton="Añadir Beneficiario"/>
       </div>
 
       <div>
-        <h2 style="color:black">Productos</h2>
-        <v-divider></v-divider>
+        <v-titulo-home titulo="Transferencias"/>
 
         <div class="d-flex flex-row">
           <v-card
@@ -124,8 +121,7 @@
       </div>
 
       <div>
-        <h2 style="color:black">Tarjetas</h2>
-        <v-divider></v-divider>
+        <v-titulo-home titulo="Transferencias"/>
         <div class="d-flex flex-row">
           <v-card
               class="mx-auto"
@@ -240,8 +236,8 @@
 <script>
 import VBotonPrimario from "../components/VBotonPrimario";
 import VNavbar from "../components/VNavbar"
-
+import VTituloHome from "../components/VTituloHome"
 export default {
-  components:{VBotonPrimario,VNavbar}
+  components:{VBotonPrimario,VNavbar,VTituloHome}
 }
 </script>
