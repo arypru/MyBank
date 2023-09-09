@@ -3,7 +3,7 @@
       <v-list-item-group
           v-model="selectedItem"
           color="teal lighten-1"
-          class="d-flex flex-row justify-center align-items"
+          class="d-flex flex-row justify-center align-items Bricolage-Regular"
       >
         <v-list-item
             v-for="(item, i) in items"

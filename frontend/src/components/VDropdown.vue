@@ -11,7 +11,7 @@
               v-on="on"
           >
             <v-hover v-slot="{ hover }" >
-              <span class="black--text font" :class="hover ? 'teal--text lighten-1--text' : 'black--text'">
+              <span class="black--text text-capitalize Bricolage-Regular" :class="hover ? 'teal--text lighten-1--text' : 'black--text'">
                 {{ nombre }}<v-icon >mdi-menu-down</v-icon>
               </span>
             </v-hover>
@@ -27,7 +27,7 @@
             :href="item.link"
         >
           <v-hover v-slot="{ hover }" >
-            <v-list-item-title :class="hover ? 'teal--text lighten-1--text' : 'black--text'" class=" py-3">
+            <v-list-item-title :class="hover ? 'teal--text lighten-1--text' : 'black--text'" class="Bricolage-Regular py-3">
               {{ item.titulo}}
             </v-list-item-title>
           </v-hover>
@@ -50,10 +50,6 @@ export default {
 </script>
 
 <style scoped>
-.font{
-  font-family: 'Bricolage Grotesque', sans-serif;
-}
-
 .v-menu__content {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }

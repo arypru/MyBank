@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>{{ titulo }}</h2>
+    <h2 class="Bricolage-SemiBold">{{ titulo }}</h2>
     <v-divider></v-divider>
   </div>
 </template>
