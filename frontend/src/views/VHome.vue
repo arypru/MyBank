@@ -4,14 +4,8 @@
 
     <v-container rounded-xl style="background: white" class="mt-8 pa-13">
 
-      <div class="p-12">
-        <v-titulo-home titulo="Transferencias"/>
-        <div class="d-flex flex-row justify-space-between align-center my-8">
-          <div v-for="(item, i) in itemsCard" :key="i">
-            <v-boton-card :texto="item.text" :imagenurl="item.imagenurl"/>
-          </div>
-        </div>
-      </div>
+      <v-section-transferencia/>
+
 
       <!--
       <div>
@@ -238,24 +232,11 @@
 
 <script>
 import VNavbar from "../components/VNavbar"
-import VTituloHome from "../components/VTituloHome"
-import VBotonCard from "../components/VBotonCard"
 
-import newtransfer from "../assets/images/transferencia-bancaria.svg";
-import vertransfer from "../assets/images/factura.svg";
-import verbenef from "../assets/images/cuenta-de-usuario.svg"
+import VSectionTransferencia from "../components/VSectionTransferencia"
+
 
 export default {
-  components:{VNavbar,VTituloHome,VBotonCard},
-
-  data () {
-    return {
-      itemsCard: [
-        { text: `Nueva` + `\n` + `Transferencia`, imagenurl: newtransfer, link: '' },
-        { text: `Ver` + `\n` + `Transferencias`, imagenurl: vertransfer, link: ''},
-        { text: `Ver` + `\n` + `Beneficiarios`, imagenurl: verbenef, link:''},
-      ],
-    }
-  }
+  components:{VNavbar,VSectionTransferencia},
 }
 </script>
