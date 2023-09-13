@@ -53,6 +53,7 @@ class UserController extends Controller
             'updated_at' => Carbon::now(),
         ]);
 
+
         return response()->json([
             'status' => true,
             'user' => $user,

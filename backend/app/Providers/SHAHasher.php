@@ -17,6 +17,7 @@ class SHAHasher extends AbstractHasher implements HasherContract {
     public function make($value, array $options = array()) {
         //I have custom encoding / encryption here//
         //Define your custom hashing logic here//
+        $aux=sha1($value);
         return sha1($value);
     }
 
