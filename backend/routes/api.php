@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\PersonaController;
 use App\Http\Controllers\Api\UserController;
-
+use App\Http\Controllers\Api\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +22,17 @@ Route::apiResource('personas', PersonaController::class);
 Route::post('/verificar-dni/{dni}', [PersonaController::class, 'verificar_dni']);
 
 Route::apiResource('users', UserController::class);
+
+/*
+Route::post('/login', AuthController::class, 'login');
+
+Route::middleware('auth:sanctum')->group(function ()
+{
+    Route::post('/logout', AuthController::class, 'logout');
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+});
 
 /**Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

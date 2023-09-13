@@ -122,8 +122,11 @@ class PersonaController extends Controller
      * Busca el telefono de una persona por su DNI y devuelve su telefono
      */
     public function verificar_dni(string $dni){
-        $persona = DB::table('personas')->whereRaw('dni =' . $dni )->get('celular');
+        $persona = DB::table('personas')->whereRaw('dni =' . $dni )->get('id');
         return response()->json($persona, 200);
     }
+
+
+
 
 }
