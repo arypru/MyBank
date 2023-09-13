@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Api\PersonaController;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -30,11 +34,31 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crea un usuario / Referencia a una persona que ya existe
      */
     public function store(Request $request)
     {
-        //
+        //busco a la persona
+
+        $persona = DB::table('personas')->whereRaw('dni =' . $request->dni )->value('id');
+
+
+        $user = User::create([
+            'nombre_user' => $request->nombre_user,
+            'email' => $request->email,
+            'cuil'=>$request->cuil,
+            'password' =>Hash::make($request->password),
+            'persona_id' => $persona,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'user' => $user,
+            'message' => 'User Created Successfully',
+            'token' => $user->createToken("API TOKEN")->plainTextToken
+        ], 200);
     }
 
     /**

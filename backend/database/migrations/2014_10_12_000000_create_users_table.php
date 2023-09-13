@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('nombre_user')->unique();
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('foto_perfil');
             $table->boolean('habilitado')->default(true);
             $table->rememberToken();
             $table->timestamps();

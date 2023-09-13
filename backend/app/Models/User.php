@@ -21,6 +21,7 @@ class User extends Authenticatable
         'nombre_user',
         'email',
         'password',
+        'persona_id'
     ];
 
     /**
@@ -39,6 +40,7 @@ class User extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
 
     public function persona(){
         return $this->hasOne(Persona::class);
