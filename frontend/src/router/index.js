@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 import VLogin from '../views/VLogin'
 import VRegistro from '../views/VRegistro'
 import VHome from '../views/VHome'
+import auth from "../middleware/auth";
+import guest from "../middleware/guest";
+import middlewarePipeline from "./middlewarePipeline";
 
 Vue.use(VueRouter)
 
@@ -11,21 +15,21 @@ const routes = [
     path: '/',
     name: 'Home',
     component: VHome,
-    meta: { title: 'Inicio'}
+      meta: {title: 'Inicio', middleware: [auth] }
   },
 
     {
         path: '/login',
         name: 'Ingresar',
         component: VLogin,
-        meta: { title: 'Ingresar'}
+        meta: { title: 'Ingresar', middleware: [guest]}
     },
 
     {
         path: '/registrarse',
         name: 'Registro',
         component: VRegistro,
-        meta: { title: 'Registro'}
+        meta: { title: 'Registro', middleware: [guest]}
     },
 ]
 
@@ -34,4 +38,17 @@ const router = new VueRouter({
     routes
 })
 
+router.beforeEach((to, from, next) => {
+    const middleware = to.meta.middleware;
+    const context = { to, from, next, store };
+
+    if (!middleware) {
+        return next();
+    }
+
+    middleware[0]({
+        ...context,
+        next: middlewarePipeline(context, middleware, 1),
+    });
+});
 export default router

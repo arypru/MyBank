@@ -19,7 +19,7 @@
             </form>
             {{ this.auth }}
             {{ this.$store.getters.message }}
-
+            {{this.$store.getters.token}}
 
               <v-divider inset></v-divider>
               <h4 class="text-center my-4"> <pre>{{quieroregistrarmetext}}</pre></h4>

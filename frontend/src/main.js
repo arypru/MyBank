@@ -18,7 +18,8 @@ Vue.use({
   }
 })
 
-axios.defaults.headers.common.Authorization = `Bearer ${store.getters.get_token}`
+axios.defaults.headers.common.Authorization = `Bearer ${store.getters.token}`
+console.log(axios.defaults.headers.common.Authorization)
 
 
 new Vue({
