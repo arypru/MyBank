@@ -42,11 +42,9 @@ class UserController extends Controller
 
         $persona = DB::table('personas')->whereRaw('dni =' . $request->dni )->value('id');
 
-
         $user = User::create([
             'nombre_user' => $request->nombre_user,
             'email' => $request->email,
-            'cuil'=>$request->cuil,
             'password' =>Hash::make($request->password),
             'persona_id' => $persona,
             'created_at' => Carbon::now(),

@@ -17,6 +17,10 @@ use App\Http\Controllers\Api\AuthController;
 |
 */
 
+Route::get('{any}', function () {
+    return view('welcome');
+})->where('any', '.*');
+
 //Persona
 Route::apiResource('personas', PersonaController::class);
 Route::apiResource('users', UserController::class);

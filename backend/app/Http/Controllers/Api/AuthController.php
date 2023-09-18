@@ -21,12 +21,12 @@ class AuthController extends Controller
 
         if($login){
             return response()->json([
-                'message' => "usuario logueado con exito perro",
+                'message' => "ok",
                 'token' => $user->createToken('token')->plainTextToken
             ]);
         }else{
             return response()->json([
-                'message' => "usuario no logueado perroo",
+                'message' => "error",
             ]);
         }
 
