@@ -25,10 +25,11 @@
             v-for="item in items"
             :key="item.titulo"
             :href="item.link"
+            @click="onLogout"
         >
           <v-hover v-slot="{ hover }" >
             <v-list-item-title :class="hover ? 'teal--text lighten-1--text' : 'black--text'" class="Bricolage-Regular py-3">
-              {{ item.titulo}}
+             {{ item.titulo}}
             </v-list-item-title>
           </v-hover>
         </v-list-item>
@@ -38,14 +39,27 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   data: () => ({
     nombre: 'pepe argentino',
     items: [
-      { titulo: 'Mis Datos' , url:''},
-      { titulo: 'Salir', url:'' },
+      { titulo: 'Mis Datos' , url:'', click: ''},
+      { titulo: 'Salir', url:'/' , click:'onLogout' },
     ],
   }),
+
+  methods: {
+    ...mapActions({
+      salir: 'logout',
+    }),
+
+
+    onLogout() {
+      this.salir();
+    },
+  },
 }
 </script>
 
