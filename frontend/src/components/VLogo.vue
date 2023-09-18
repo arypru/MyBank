@@ -11,11 +11,11 @@ export default {
   name: 'TextFile',
   props:{
     heightProp: {
-      type: Number,
+      type: String,
       required: true
     },
     widthProp:{
-      type: Number,
+      type: String,
       required: true
     }
   },
