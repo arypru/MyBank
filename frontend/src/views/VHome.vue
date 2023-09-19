@@ -2,7 +2,6 @@
   <div>
     <v-navbar/>
     <v-container rounded-xl style="background: white" class="mt-4 py-8 px-13">
-      {{this.$store.getters.token}}
       <v-section-transferencia/>
       <v-section-products/>
       <v-section-tarjeta/>

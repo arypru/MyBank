@@ -14,13 +14,26 @@ Vue.use({
     Vue.prototype.$api = axios.create({
       baseURL: process.env.VUE_APP_API_URL,
       withCredentials: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        responseType: "json",
+
+      }
     })
   }
 })
 
-axios.defaults.headers.common.Authorization = `Bearer ${store.getters.token}`
-console.log(axios.defaults.headers.common.Authorization)
+axios.interceptors.request.use(function (config) {
+  const token = store.getters.token
 
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
 
 new Vue({
   main,
