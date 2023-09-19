@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tipo_cuentas', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->string('acronimo');
             $table->string('descripcion');
             $table->unsignedBigInteger('moneda_id');
