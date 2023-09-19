@@ -12,16 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cuentas', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
 
-            $table->bigInteger('CBU');
+            $table->string('CBU');
             $table->string('alias');
-            $table->boolean('isFavorita');
-            $table->boolean('isCuentaPropia');
+            $table->integer('numeroCuenta')->unique();
+            $table->boolean('isFavorita')->default(false);
+            $table->boolean('isCuentaPropia')->default(false);
 
             //informacion del saldo
-            $table->bigInteger('saldo_disponible')->default(0.00);
-            $table->bigInteger('saldo_bloqueado')->default(0.00);
+            $table->decimal('saldoDisponible',8,2)->default(00000000.00);
+            $table->decimal('saldoBloqueado',8,2)->default(00000000.00);
 
             //titular
             $table->unsignedBigInteger('persona_id');

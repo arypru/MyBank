@@ -9,6 +9,7 @@ use Illuminate\Database\Seeder;
 class BancoSeeder extends Seeder
 {
     Private $arrayBanco = array (
+        array('nombre' => 'MyBank', 'virtual'=>false, 'logoUrl'=>'banCo.png'),
         array('nombre' => 'BanCo', 'virtual'=>false, 'logoUrl'=>'banCo.png'),
         array('nombre' => 'Santander Rio', 'virtual'=>false, 'logoUrl'=>'santander.png'),
         array('nombre' => 'Patagonia', 'virtual'=>false, 'logoUrl'=>'patagonia.png'),
