@@ -17,10 +17,6 @@
               <v-boton-text class="block" :texto=botontext icontext="mdi-cursor-default-click"/>
 
             </form>
-            {{ this.auth }}
-            {{ this.$store.getters.message }}
-            {{this.$store.getters.token}}
-
               <v-divider inset></v-divider>
               <h4 class="text-center my-4"> <pre>{{quieroregistrarmetext}}</pre></h4>
               <v-boton-secundario linkSecundario="/registrarse" textoBoton = "Quiero registrarme" textoIcon="mdi-menu-right"/>
@@ -70,30 +66,8 @@ export default {
     }),
 
     onLogin() {
-      console.log("entro al metodo")
-      console.log(this.auth)
       this.login(this.auth);
     },
-
-    /*
-    async login(){
-      console.log("entro a login")
-      this.processing = true
-      await axios.get('/sanctum/csrf-cookie')
-      await axios.post('/login',this.auth).then(({data})=>{
-        console.log(data)
-        this.signIn()
-      }).catch(({response})=>{
-        if(response.status===422){
-          this.validationErrors = response.data.errors
-        }else{
-          this.validationErrors = {}
-          alert(response.data.message)
-        }
-      }).finally(()=>{
-        this.processing = false
-      })
-    },*/
   }
 
 }
