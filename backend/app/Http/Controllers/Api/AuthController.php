@@ -24,6 +24,7 @@ class AuthController extends Controller
     {
 
         $user = User::where('nombre_user', request()->nombre_user)->first();
+        $user->tokens()->delete();
 
         $login = Auth::attempt(array('nombre_user' => request()->nombre_user, 'password' => sha1(request()->password)));
 
