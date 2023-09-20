@@ -3,8 +3,9 @@ import router from '@/router'
 
 const state = {
     user: {},
-    msg: {},
+    msg: "",
     token: {},
+    error: false,
     authenticated:false,
     btn_login: false,
 }
@@ -20,6 +21,10 @@ const getters = {
 
     token(state){
         return state.token
+    },
+
+    error(state){
+        return state.error
     }
 }
 
@@ -38,45 +43,53 @@ const mutations = {
         state.token = value
     },
 
+    SET_ERROR (state, value){
+        state.error = value
+    }
+
 }
 const actions = {
     login ({commit}, user) {
         console.log(user)
         axios.post(process.env.VUE_APP_API_URL + '/api/login', user)
             .then (response => {
-                if(response.data.message === 'error'){
+                if(response.data.state === 'error'){
+                    console.log("sfs")
                     commit('SET_MSG',response.data.message)
+                    commit('SET_ERROR',true)
                     commit('SET_AUTHENTICATED',false)
                 }else{
                     commit('SET_TOKEN', response.data.token)
-                    console.log("grabo token")
                     commit('SET_AUTHENTICATED',true)
                     commit('SET_MSG',response.data.message)
                     commit('SET_USER',response.data.user)
-                    console.log(response.data.token)
                     router.push({name:'Home'})
                 }
             })
             .catch (error => {
-                console.log("error",error)
-                commit('SET_MSG',error.data.message)
+                console.log(error)
+                commit('SET_ERROR',true)
+                console.log(error.message)
+                commit('SET_MSG',error.message)
                 commit('SET_AUTHENTICATED',false)
             })
     },
 
     logout({commit}){
-        console.log("entro")
-
         axios.post(process.env.VUE_APP_API_URL+ '/api/logout')
             .then( response =>{
                 commit('SET_TOKEN',{})
-                console.log("logout")
-                console.log(response)
                 commit('SET_USER',{})
                 commit('SET_MSG',response.data.message)
                 commit('SET_AUTHENTICATED',false)
                 router.push({name:'Ingresar'})
             } )
+            .catch (error => {
+                commit('SET_ERROR',true)
+                console.log(error.message)
+                commit('SET_MSG',error.message)
+                commit('SET_AUTHENTICATED',false)
+            })
     }
 }
 
