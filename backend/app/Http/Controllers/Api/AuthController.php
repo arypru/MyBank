@@ -22,48 +22,47 @@ class AuthController extends Controller
 
     public function login()
     {
-
         $user = User::where('nombre_user', request()->nombre_user)->first();
-        $user->tokens()->delete();
+        if(isset($user->id)){
+            $user->tokens()->delete();
 
-        $login = Auth::attempt(array('nombre_user' => request()->nombre_user, 'password' => sha1(request()->password)));
+            if(Hash::check(request()->password, $user->password)){
+                $token_v1 = $user->createToken('token')->plainTextToken;
+                $user->token = $token_v1;
+                $user->save();
 
-        $token_v1 = $user->createToken('token')->plainTextToken;
-        $user->token = $token_v1;
-        $user->save();
+                return response()->json([
+                    'message' => "Usuario logueado correctamente",
+                    'token' => $token_v1,
 
-        if($login){
-            return response()->json([
-                'message' => "ok",
-                'token' => $token_v1
-            ]);
+                ],200);
+
+            }else{
+                return response()->json([
+                    'message' => "Error. Contraseña Incorrecta",
+                    "state" => "error"
+                ],200);
+
+            }
         }else{
-            return response()->json([
-                'message' => "error",
-            ]);
-        }
 
+            return response()->json([
+                'message' => "Error. Usuario Incorrecto",
+                "state" => "error"
+            ],200);
+        }
     }
+
 
     public function logout(){
 
-        //$user = Auth::user();
         $user = User::findOrFail(auth()->user()->getAuthIdentifier());
         $user->tokens()->delete();
-        //auth('sanctum')->user()->tokens()->delete();
         //
-        return ('usuario deslogueado');
-        /*
-       if(Auth::user()){
-           auth('sanctum')->user()->tokens()->delete();
-           Auth::logout();
-           return response()->json([
-               "mensaje"=>"se deslogueo con exito"
-           ]);
-       } else{
-           return response()->json([
-               "mensaje"=>"no se edslogueo nada"
-           ]);
-       }*/
+        return response()->json([
+            'message' => "Usuario deslogueado con éxito",
+            "state" => "error"
+        ],200);
+
     }
 }
