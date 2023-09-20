@@ -8,18 +8,36 @@
             <form @submit.prevent="onLogin">
 
               <v-label-input textoLabel="Usuario"/>
-              <v-text-file v-model="auth.nombre_user" icon="mdi-account" placeholderText="Ingrese su usuario"/>
+              <v-text-file inputTypeValue="text" v-model="auth.nombre_user" icon="mdi-account" placeholderText="Ingrese su usuario"/>
 
               <v-label-input textoLabel="Contraseña"/>
-              <v-text-file v-model="auth.password" icon="mdi-lock" placeholderText="Ingrese su contraseña"/>
+              <v-text-field
+                  color="teal lighten-1"
+                  outlined
+                  placeholderText="Ingrese su contraseña"
+                  v-model="auth.password"
+                  :prepend-inner-icon="showPasswordLogin ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="showPasswordLogin ? 'text' : 'password' "
+                  @click:prepend-inner="showPasswordLogin = !showPasswordLogin"
+              ></v-text-field>
 
-              <v-boton-primario type="submit" :disabled="processing" textoBoton="Ingresar" textoIcon="mdi-menu-right"/>
-              <v-boton-text class="block" :texto=botontext icontext="mdi-cursor-default-click"/>
+              <v-boton-primario type="submit" textoBoton="Ingresar" textoIcon="mdi-menu-right"/>
+              <v-boton-text :click="showPasswordLogin" class="block" :texto=botontext icontext="mdi-cursor-default-click"/>
+
+              <v-alert v-if="incompleteAuth || this.$store.getters.error" type="error">
+                <div v-if="incompleteAuth">
+                  Complete los campos nombre de usuario y contraseña antes de ingresar.
+                </div>
+                <div v-else>
+                  {{this.$store.getters.message}}
+                </div>
+
+              </v-alert>
 
             </form>
               <v-divider inset></v-divider>
               <h4 class="text-center my-4"> <pre>{{quieroregistrarmetext}}</pre></h4>
-              <v-boton-secundario linkSecundario="/registrarse" textoBoton = "Quiero registrarme" textoIcon="mdi-menu-right"/>
+              <v-boton-secundario  linkSecundario="/registrarse" textoBoton = "Quiero registrarme" textoIcon="mdi-menu-right"/>
           </v-card>
         </v-col>
 
@@ -39,7 +57,7 @@ import VLogo from "../components/VLogo";
 import VBotonSecundario from "../components/VBotonSecundario"
 import VBotonText from "../components/VBotonText"
 
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   components:{VTextFile,VBotonPrimario,VLabelInput,VLogo,VBotonSecundario,VBotonText},
@@ -51,13 +69,21 @@ export default {
         nombre_user:"",
         password:""
       },
+      incompleteAuth: false,
       validationErrors:{},
       processing:false,
-
+      showPasswordLogin: false,
       imagenPortada: imagenLogin,
       botontext: `Si olvidaste tu contraseña` + `\n` + `Hace clic aca`,
       quieroregistrarmetext:`¿Qué esperas para registrarte?` + `\n` +`Te tomara solo unos minutos`
     }
+  },
+
+  computed: {
+    ...mapGetters([
+      "error",
+      "message"
+    ]),
   },
 
   methods:{
@@ -66,8 +92,18 @@ export default {
     }),
 
     onLogin() {
-      this.login(this.auth);
+      console.log(this.auth)
+      if(this.auth.nombre_user === "" || this.auth.password === ""){
+        this.incompleteAuth = true;
+      }else{
+        this.incompleteAuth = false
+        this.login(this.auth);
+      }
     },
+
+    changeIcon(){
+
+    }
   }
 
 }
