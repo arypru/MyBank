@@ -1,7 +1,7 @@
 <template>
   <v-hover v-slot="{ hover }" >
     <v-card
-        class="mx-auto Bricolage-Regular rounded-xl"
+        class="mx-2 my-3 Bricolage-Regular rounded-xl"
         max-width="344"
         outlined
         hover
@@ -12,13 +12,14 @@
       <v-list-item three-line class="text-center">
         <v-list-item-content>
           <div class="text-overline mb-2">
-            CC 000964875411352415
+            {{cuenta.acronimoTipoCuenta}} {{cuenta.numeroCuenta}}
           </div>
           <v-list-item-title class="text-h4">
-            <p class="Bricolage-SemiBold teal--text text--lighten-1">$ 7854,785</p>
+            <p class="Bricolage-SemiBold teal--text text--lighten-1">{{cuenta.monedaSimbolo}} {{cuenta.saldoDisponible}}</p>
           </v-list-item-title>
           <v-list-item-subtitle>
-            <p class="Bricolage-SemiBold">aliasss</p>
+            <p class="Bricolage-SemiBold">{{cuenta.CBU}}</p>
+            <p class="Bricolage-SemiBold">{{cuenta.alias}}</p>
           </v-list-item-subtitle>
 
           <v-card-actions class="d-flex justify-center">
@@ -52,6 +53,14 @@
 
 <script>
 
+export default {
+  props: {
+    cuenta:{
+      type:[],
+      required: true
+    }
+  }
+}
 </script>
 
 <style>
