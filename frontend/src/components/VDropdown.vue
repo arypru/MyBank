@@ -12,7 +12,7 @@
           >
             <v-hover v-slot="{ hover }" >
               <span class="black--text text-capitalize Bricolage-Regular" :class="hover ? 'teal--text lighten-1--text' : 'black--text'">
-                {{ nombre }}<v-icon >mdi-menu-down</v-icon>
+                {{ user.nombre_user }}<v-icon >mdi-menu-down</v-icon>
               </span>
             </v-hover>
 
@@ -39,16 +39,18 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
+
   data: () => ({
-    nombre: 'pepe argentino',
     items: [
       { titulo: 'Mis Datos' , url:'', click: ''},
       { titulo: 'Salir', url:'/' , click:'onLogout' },
     ],
   }),
+
+  computed: mapGetters(['user']),
 
   methods: {
     ...mapActions({
