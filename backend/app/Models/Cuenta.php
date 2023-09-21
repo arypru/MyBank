@@ -57,6 +57,7 @@ class Cuenta extends Model
                 ->join('estados','estados.id','=','cuentas.estado_id')
                 ->join('monedas','tipo_cuentas.moneda_id','=','monedas.id')
                 ->where('persona_id', $user->id)
+                ->where('cuentas.estado_id',1)
                 ->orderBy('cuentas.id')
                 ->get();
 
@@ -117,6 +118,28 @@ class Cuenta extends Model
         $palabra1  = mt_rand(0, count($listaDePalabras) - 1);
         $palabra2  = mt_rand(0, count($listaDePalabras) - 1);
         return $listaDePalabras[$palabra1] . "." . $listaDePalabras[$palabra2];
+    }
+
+    public static function darDeBaja($numeroCuenta){
+
+        $query = DB::table('cuentas')
+            ->select(
+                'cuentas.id as idCuenta',
+                'cuentas.numeroCuenta as numeroCuenta',
+                'estados.id as estadoId',
+                'tipo_cuentas.acronimo as acronimoTipoCuenta',
+                'tipo_cuentas.descripcion as tipoCuentaDescrip',
+                'monedas.descripcion as monedaDescrip',
+                'monedas.simbolo as monedaSimbolo',
+            )
+            ->join('estados','estados.id','=','cuentas.estado_id')
+            ->join('tipo_cuentas', 'tipo_cuentas.id', '=', 'cuentas.tipocuenta_id')
+            ->join('monedas','tipo_cuentas.moneda_id','=','monedas.id')
+            ->where('numeroCuenta', $numeroCuenta)
+            ->orderBy('cuentas.id')
+            ->get();
+
+        return $query;
     }
 
 }

@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::get('/ver-cuentas-usuarios/{id}', [CuentaController::class, 'verTodasLasCuentasUsuario']);
     Route::get('/ver-detalle-cuenta/{nrocuenta}', [CuentaController::class, 'verDetalleCuenta']);
     Route::post('/nueva-cuenta', [CuentaController::class, 'store']);
+    Route::post('/dar-baja-cuenta/{nrocuenta}', [CuentaController::class, 'darDeBaja']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
