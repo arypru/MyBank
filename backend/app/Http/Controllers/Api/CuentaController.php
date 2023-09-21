@@ -79,4 +79,13 @@ class CuentaController extends Controller
 
         return response()->json($cuentaAlias, 200);
     }
+
+    public function modificarDescripcion(Request $request){
+
+        $cuentaDescrip = Cuenta::findOrFail($request->idCuenta);
+        $cuentaDescrip->descripcion = $request->descripcion;
+        $cuentaDescrip->update();
+
+        return response()->json($cuentaDescrip, 200);
+    }
 }

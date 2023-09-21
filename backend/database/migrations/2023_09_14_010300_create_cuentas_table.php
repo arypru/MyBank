@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->string('CBU');
             $table->string('alias');
+            $table->string('descripcion')->default('');
             $table->integer('numeroCuenta')->unique();
             $table->boolean('isFavorita')->default(false);
             $table->boolean('isCuentaPropia')->default(false);

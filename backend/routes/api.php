@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::post('/nueva-cuenta', [CuentaController::class, 'store']);
     Route::post('/dar-baja-cuenta/{nrocuenta}', [CuentaController::class, 'darDeBaja']);
     Route::post('/modificar-alias', [CuentaController::class, 'modificarAlias']);
+    Route::post('/modificar-descrip', [CuentaController::class, 'modificarDescripcion']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
