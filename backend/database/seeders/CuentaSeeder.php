@@ -12,6 +12,7 @@ class CuentaSeeder extends Seeder
         array(
             'CBU' => '7679828111100097889798',
             'alias'=>'DIENTE.PUMA',
+            'descripcion'=>'Cuenta Sueldo',
             'numeroCuenta'=>124578,
             'saldoDisponible'=>'24520',
             'persona_id'=>1,
@@ -27,6 +28,7 @@ class CuentaSeeder extends Seeder
             $cuenta = new Cuenta;
             $cuenta->CBU = $c['CBU'];
             $cuenta->alias = $c['alias'];
+            $cuenta->descripcion = $c['descripcion'];
             $cuenta->numeroCuenta = $c['numeroCuenta'];
             $cuenta->saldoDisponible = $c['saldoDisponible'];
             $cuenta->persona_id = $c['persona_id'];
