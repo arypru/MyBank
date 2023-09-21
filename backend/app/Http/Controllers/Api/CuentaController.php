@@ -70,4 +70,13 @@ class CuentaController extends Controller
 
         return response()->json($cuentaDeshabilitada, 200);
     }
+
+    public function modificarAlias(Request $request){
+
+        $cuentaAlias = Cuenta::findOrFail($request->idCuenta);
+        $cuentaAlias->alias = $request->alias;
+        $cuentaAlias->update();
+
+        return response()->json($cuentaAlias, 200);
+    }
 }
