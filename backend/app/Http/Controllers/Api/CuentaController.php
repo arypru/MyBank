@@ -62,5 +62,12 @@ class CuentaController extends Controller
         return response()->json($cuenta, 200);
     }
 
+    public function darDeBaja ($idCuenta){
 
+        $cuentaDeshabilitada = Cuenta::findOrFail($idCuenta);
+        $cuentaDeshabilitada->estado_id = 2;
+        $cuentaDeshabilitada->update();
+
+        return response()->json($cuentaDeshabilitada, 200);
+    }
 }
