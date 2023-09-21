@@ -25,6 +25,10 @@ const getters = {
 
     error(state){
         return state.error
+    },
+
+    user(state){
+        return state.user
     }
 }
 

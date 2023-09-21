@@ -1,10 +1,9 @@
 <template>
   <div>
     <v-titulo-home titulo="Productos"/>
-
-    <div class="d-flex flex-row justify-space-between align-center my-8">
-      <div v-for="(item, i) in itemsProduct" :key="i">
-        <v-card-products/>
+    <div class="d-flex flex-row align-content-center my-8 flex-wrap">
+      <div v-for="(item,i) in cuentas" :key="i">
+        <v-card-products :cuenta="item"/>
       </div>
     </div>
 
@@ -14,18 +13,20 @@
 <script>
 import VCardProducts from "../components/VCardProducts"
 import VTituloHome from "../components/VTituloHome"
+import {mapGetters, mapActions} from "vuex";
 
 export default {
 
   components:{VCardProducts,VTituloHome},
-  data () {
-    return {
-      itemsProduct: [
-        { text: `Nueva` + `\n` + `Transferencia`, link: '' },
-        { text: `Ver` + `\n` + `Transferencias`,  link: ''},
-        { text: `Ver` + `\n` + `Beneficiarios`, link:''},
-      ],
-    }
-  }
+
+  computed: mapGetters(['cuentas','user']),
+
+  mounted() {
+    this.verCuentasUsuarios(this.user.id);
+  },
+
+  methods: {
+    ...mapActions(['verCuentasUsuarios']),
+  },
 }
 </script>
