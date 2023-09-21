@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\PersonaController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CuentaController;
 use App\Http\Controllers\Api\AuthController;
 /*
 |--------------------------------------------------------------------------
@@ -17,32 +18,19 @@ use App\Http\Controllers\Api\AuthController;
 |
 */
 
-Route::get('{any}', function () {
-    return view('welcome');
-})->where('any', '.*');
-
 //Persona
 Route::apiResource('personas', PersonaController::class);
 Route::apiResource('users', UserController::class);
-
 Route::post('/verificar-dni/{dni}', [PersonaController::class, 'verificar_dni']);
-
-
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function ()
 {
+    Route::get('/ver-cuentas-usuarios/{id}', [CuentaController::class, 'verTodasLasCuentasUsuario']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-
-    Route::post('/logout', [AuthController::class, 'logout']);
-
 });
-
-/**Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-
-});**/
 
