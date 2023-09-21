@@ -42,7 +42,6 @@ class AuthController extends Controller
                     'message' => "Error. Contraseña Incorrecta",
                     "state" => "error"
                 ],200);
-
             }
         }else{
 

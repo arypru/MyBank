@@ -102,4 +102,21 @@ class Cuenta extends Model
             return $query;
     }
 
+    public static function nroCuentaAleatorio(){
+        $nroCuenta = str_pad(mt_rand(1, 999999999), 9, '0', STR_PAD_RIGHT);
+        return $nroCuenta;
+    }
+
+    public static function cbuAleatorio(){
+        $cbu  = str_pad(mt_rand(1, 999999999999999999), 22, '0', STR_PAD_RIGHT);
+        return $cbu;
+    }
+
+    public static function aliasAleatorio(){
+        $listaDePalabras = ['MANZANA', 'MONTAÑA', 'PUMA', 'GUITARRA', 'FRESCO', 'PIÑA'];
+        $palabra1  = mt_rand(0, count($listaDePalabras) - 1);
+        $palabra2  = mt_rand(0, count($listaDePalabras) - 1);
+        return $listaDePalabras[$palabra1] . "." . $listaDePalabras[$palabra2];
+    }
+
 }
