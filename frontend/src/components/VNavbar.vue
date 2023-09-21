@@ -13,7 +13,7 @@ import VDropdown from "../components/VDropdown";
 import VItemNavbar from "../components/VItemNavbar";
 
 export default {
-  components:{VDropdown,VItemNavbar}
+  components:{VDropdown,VItemNavbar},
 }
 
 </script>

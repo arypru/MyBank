@@ -7,16 +7,27 @@ import VHome from '../views/VHome'
 import auth from "../middleware/auth";
 import guest from "../middleware/guest";
 import middlewarePipeline from "./middlewarePipeline";
+import AppLayout from "@/layout/AppLayout";
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: VHome,
-      meta: {title: 'Inicio', middleware: [auth] }
-  },
+
+    {
+        path: '/',
+        component: AppLayout,
+        meta: {
+            middleware: "auth"
+        },
+        children: [
+            {
+                path: '/',
+                name: 'Home',
+                component: VHome,
+                meta: {title: 'Inicio', middleware: [auth] }
+            },
+        ]
+    },
 
     {
         path: '/login',
