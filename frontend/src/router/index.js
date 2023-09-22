@@ -9,7 +9,7 @@ import guest from "../middleware/guest";
 import middlewarePipeline from "./middlewarePipeline";
 import VCuentaDetalle from "../views/VCuentaDetalle"
 import AppLayout from "@/layout/AppLayout";
-import VRouteList from "../views/VRouteList";
+import VRouterList from "../views/VRouterList"
 
 Vue.use(VueRouter)
 
@@ -54,7 +54,7 @@ const routes = [
     {
         path: '/routes', // Ruta para mostrar las rutas
         name: 'RouteList',
-        component: VRouteList,
+        component: VRouterList,
     },
 ]
 
