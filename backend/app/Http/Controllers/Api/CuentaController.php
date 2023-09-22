@@ -68,7 +68,9 @@ class CuentaController extends Controller
         $cuentaDeshabilitada->estado_id = 2;
         $cuentaDeshabilitada->update();
 
-        return response()->json($cuentaDeshabilitada, 200);
+        $msg = 'Cuenta' . $cuentaDeshabilitada->numeroCuenta . 'Deshabilitada correctamente';
+
+        return response()->json($msg, 200);
     }
 
     public function modificarAlias(Request $request){

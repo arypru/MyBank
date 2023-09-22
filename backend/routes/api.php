@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::get('/ver-cuentas-usuarios/{id}', [CuentaController::class, 'verTodasLasCuentasUsuario']);
     Route::get('/ver-detalle-cuenta/{nrocuenta}', [CuentaController::class, 'verDetalleCuenta']);
     Route::post('/nueva-cuenta', [CuentaController::class, 'store']);
-    Route::post('/dar-baja-cuenta/{nrocuenta}', [CuentaController::class, 'darDeBaja']);
+    Route::post('/dar-baja-cuenta/{idCuenta}', [CuentaController::class, 'darDeBaja']);
     Route::post('/modificar-alias', [CuentaController::class, 'modificarAlias']);
     Route::post('/modificar-descrip', [CuentaController::class, 'modificarDescripcion']);
 
