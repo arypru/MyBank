@@ -29,11 +29,11 @@ class CuentaController extends Controller
 
     public function verDetalleCuenta ($nrocuenta){
 
-        $cuentas = Cuenta::verDetalleCuenta($nrocuenta);
+        $cuenta = Cuenta::verDetalleCuenta($nrocuenta);
 
-        if($cuentas){
+        if($cuenta){
             return response()->json([
-                'cuentas'=> $cuentas
+                'cuenta'=> $cuenta
             ], 200);
         }else{
             return response()->json([
