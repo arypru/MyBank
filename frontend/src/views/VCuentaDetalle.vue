@@ -35,10 +35,9 @@
           </v-card>
       </v-col>
       <v-col lg="4" cols="12" class="d-flex flex-column justify-center">
-
         <v-boton-primario class="my-2" texto-icon="mdi-pencil" texto-boton="Modificar ALIAS"/>
         <v-boton-primario class="my-2" texto-icon="mdi-text" texto-boton="Modificar Descripción"/>
-        <v-boton-primario class="my-2" texto-icon="mdi-close" texto-boton="Desactivar Cuenta"/>
+        <v-boton-primario @click="darBajaCuenta(cuenta.idCuenta)" class="my-2" texto-icon="mdi-close" texto-boton="Desactivar Cuenta"/>
 
       </v-col>
     </v-row>
@@ -67,7 +66,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['verDetalleCuenta']),
+    ...mapActions(['verDetalleCuenta','darBajaCuenta']),
   },
 }
 </script>
