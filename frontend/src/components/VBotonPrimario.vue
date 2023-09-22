@@ -1,5 +1,5 @@
 <template>
-  <v-btn :to=linkPrimario class="white--text" color="teal lighten-1 text-capitalize"  rounded>
+  <v-btn @click="$emit('click')" :to=linkPrimario class="white--text" color="teal lighten-1 text-capitalize"  rounded>
     <h3>{{ textoBoton }}</h3>
     <v-icon right>{{ textoIcon }}</v-icon>
   </v-btn>
@@ -23,6 +23,7 @@ export default {
      required: false,
     }
   },
+
 
 }
 </script>
