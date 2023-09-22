@@ -29,6 +29,7 @@
                 rounded
                 text
                 class="text-capitalize"
+                :href="'/detalle/'+`${cuenta.numeroCuenta}`"
             >
               Ver movimientos
             </v-btn>

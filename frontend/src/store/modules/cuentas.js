@@ -3,7 +3,8 @@ import axios from "axios";
 
 const state = {
     cuentas: {},
-    user_id: ''
+    user_id: '',
+    cuenta: {}
 }
 
 const getters = {
@@ -11,20 +12,38 @@ const getters = {
         return state.cuentas
     },
 
+    cuenta(state){
+        return state.cuenta
+    },
 }
 
 const mutations = {
     SET_CUENTAS (state, value) {
         state.cuentas = value
     },
+
+    SET_CUENTA(state, value){
+        state.cuenta = value
+    }
 }
 const actions = {
     async verCuentasUsuarios ({commit}, userId) {
-        console.log(userId)
         await axios.get(process.env.VUE_APP_API_URL + '/api/ver-cuentas-usuarios/'+`${userId}`)
             .then (response => {
                     console.log(response)
                     commit('SET_CUENTAS', response.data.cuentas)
+            })
+            .catch (error => {
+                console.log(error)
+            })
+    },
+
+     verDetalleCuenta ({commit}, numeroCuenta) {
+         commit('SET_CUENTA', {})
+         axios.get(process.env.VUE_APP_API_URL + '/api/ver-detalle-cuenta/'+`${numeroCuenta}`)
+            .then (response => {
+                console.log(response)
+                commit('SET_CUENTA', response.data.cuenta[0])
             })
             .catch (error => {
                 console.log(error)

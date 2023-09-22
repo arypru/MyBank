@@ -1,5 +1,5 @@
 <template>
-  <v-btn :to=linkPrimario class="white--text" color="teal lighten-1" large rounded>
+  <v-btn :to=linkPrimario class="white--text" color="teal lighten-1 text-capitalize"  rounded>
     <h3>{{ textoBoton }}</h3>
     <v-icon right>{{ textoIcon }}</v-icon>
   </v-btn>

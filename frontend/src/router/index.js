@@ -7,6 +7,7 @@ import VHome from '../views/VHome'
 import auth from "../middleware/auth";
 import guest from "../middleware/guest";
 import middlewarePipeline from "./middlewarePipeline";
+import VCuentaDetalle from "../views/VCuentaDetalle"
 import AppLayout from "@/layout/AppLayout";
 
 Vue.use(VueRouter)
@@ -25,6 +26,12 @@ const routes = [
                 name: 'Home',
                 component: VHome,
                 meta: {title: 'Inicio', middleware: [auth] }
+            },
+            {
+                path: '/detalle/:id',
+                name: 'Detalle',
+                component: VCuentaDetalle,
+                meta: {title: 'Detalle', middleware: [auth] }
             },
         ]
     },
