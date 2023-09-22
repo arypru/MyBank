@@ -9,6 +9,7 @@ import guest from "../middleware/guest";
 import middlewarePipeline from "./middlewarePipeline";
 import VCuentaDetalle from "../views/VCuentaDetalle"
 import AppLayout from "@/layout/AppLayout";
+import VRouterList from "../views/VRouterList"
 
 Vue.use(VueRouter)
 
@@ -48,6 +49,12 @@ const routes = [
         name: 'Registro',
         component: VRegistro,
         meta: { title: 'Registro', middleware: [guest]}
+    },
+
+    {
+        path: '/routes', // Ruta para mostrar las rutas
+        name: 'RouteList',
+        component: VRouterList,
     },
 ]
 
