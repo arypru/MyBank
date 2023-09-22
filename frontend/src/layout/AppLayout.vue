@@ -9,7 +9,9 @@
     <div v-else>
       <v-navbar/>
       <v-main class="mt-2 mb-8 mx-4 mx-sm-16">
-        <router-view/>
+        <v-container rounded-xl style="background: white" class="mt-4 py-8 px-13">
+          <router-view/>
+        </v-container>
       </v-main>
     </div>
   </div>

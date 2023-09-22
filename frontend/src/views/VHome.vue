@@ -1,9 +1,9 @@
 <template>
-    <v-container rounded-xl style="background: white" class="mt-4 py-8 px-13">
+    <div>
       <v-section-transferencia/>
       <v-section-products/>
       <v-section-tarjeta/>
-    </v-container>
+    </div>
 </template>
 
 <script>
