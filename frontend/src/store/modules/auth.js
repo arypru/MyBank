@@ -54,7 +54,9 @@ const mutations = {
 }
 const actions = {
     login ({commit}, user) {
-        console.log(user)
+        commit('SET_MSG', {})
+        commit('SET_ERROR',false)
+
         axios.post(process.env.VUE_APP_API_URL + '/api/login', user)
             .then (response => {
                 if(response.data.state === 'error'){

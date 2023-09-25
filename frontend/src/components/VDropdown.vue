@@ -24,8 +24,7 @@
             link
             v-for="item in items"
             :key="item.titulo"
-            :href="item.link"
-            @click="onLogout"
+            @click="handleItemClick(item)"
         >
           <v-hover v-slot="{ hover }" >
             <v-list-item-title :class="hover ? 'teal--text lighten-1--text' : 'black--text'" class="Bricolage-Regular py-3">
@@ -45,8 +44,8 @@ export default {
 
   data: () => ({
     items: [
-      { titulo: 'Mis Datos' , url:'', click: ''},
-      { titulo: 'Salir', url:'/' , click:'onLogout' },
+      { titulo: 'Mis Datos', click: 'showPerfil'},
+      { titulo: 'Salir', click: 'onLogout' },
     ],
   }),
 
@@ -57,9 +56,13 @@ export default {
       salir: 'logout',
     }),
 
-
-    onLogout() {
-      this.salir();
+    handleItemClick(item) {
+      let user = this.user
+      if(item.titulo === 'Mis Datos'){
+        this.$router.push('/usuario/'+`${user.id}`)
+      }else{
+        this.salir();
+      }
     },
   },
 }
