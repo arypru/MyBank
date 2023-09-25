@@ -9,7 +9,8 @@ import guest from "../middleware/guest";
 import middlewarePipeline from "./middlewarePipeline";
 import VCuentaDetalle from "../views/VCuentaDetalle"
 import AppLayout from "@/layout/AppLayout";
-import VRouterList from "../views/VRouterList"
+import VRouterList from "../views/VRouterList";
+import VUsuario from "../views/VUsuario"
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,12 @@ const routes = [
                 name: 'Detalle',
                 component: VCuentaDetalle,
                 meta: {title: 'Detalle', middleware: [auth] }
+            },
+            {
+                path: '/usuario/:id',
+                name: 'Usuario',
+                component: VUsuario,
+                meta: {title: 'Usuario', middleware: [auth] }
             },
         ]
     },

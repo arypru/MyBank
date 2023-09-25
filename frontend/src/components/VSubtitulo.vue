@@ -1,5 +1,8 @@
 <template>
-  <h3>{{ subtitulo }}</h3>
+  <div class="my-5">
+    <h3 class="Bricolage-SemiBold text-center">{{ subtitulo }}</h3>
+    <v-divider></v-divider>
+  </div>
 </template>
 
 <script>
@@ -15,7 +18,6 @@ export default {
 
 <style>
 h3{
-  letter-spacing: 0.06em;
-  font-weight: 600;
+  color:#2D2D2D;
 }
 </style>

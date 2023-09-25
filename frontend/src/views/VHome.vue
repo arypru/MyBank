@@ -23,18 +23,16 @@
 
       <v-section-transferencia/>
       <v-section-products/>
-      <v-section-tarjeta/>
     </div>
 </template>
 
 <script>
 import VSectionTransferencia from "../components/VSectionTransferencia"
 import VSectionProducts from "../components/VSectionProducts"
-import VSectionTarjeta from "../components/VSectionTarjeta"
 import {mapGetters, mapActions} from "vuex";
 
 export default {
-  components:{VSectionTransferencia,VSectionProducts,VSectionTarjeta},
+  components:{VSectionTransferencia,VSectionProducts},
 
   computed: {
     ...mapGetters(['openModal','msg']),
