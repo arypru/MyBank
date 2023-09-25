@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\accesos;
 use App\Models\User;
+use App\Models\Devices;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Jenssegers\Agent\Facades\Agent;
+
 
 
 class AuthController extends Controller
@@ -31,9 +36,24 @@ class AuthController extends Controller
                 $user->token = $token_v1;
                 $user->save();
 
+                $device = new Devices();
+                $device->device_name = Agent::device();
+                $device->browser = Agent::browser();
+                $device->os = Agent::platform();
+                $device->save();
+
+                $acceso = new accesos();
+                $ultima_conexion = Carbon::now();
+                $acceso->ultima_conexion = $ultima_conexion->format('d/m/Y H:i:s');
+                $acceso->ip = request()->ip();
+                $acceso->user_id = $user->id;
+                $acceso->devices_id = $device->id;
+                $acceso->save();
+
                 return response()->json([
                     'message' => "Usuario logueado correctamente",
                     'user' => $user,
+                    'acceso' => $acceso,
                     'token' => $token_v1,
 
                 ],200);

@@ -20,14 +20,16 @@ return new class extends Migration
     {
         Schema::create('accesos', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->dateTime("ultima_conexion");
+            $table->string("ultima_conexion");
             $table->string("ip");
-            $table->string("nombre_equipo");
-            $table->string("sistema_operativo");
 
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')
                 ->on('users');
+
+            $table->unsignedBigInteger('devices_id')->unique();
+            $table->foreign('devices_id')->references('id')
+                ->on('devices');
 
             $table->timestamps();
         });
