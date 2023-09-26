@@ -64,4 +64,9 @@ class AccesosController extends Controller
     {
         //
     }
+
+    public function accesoActivo($idUser){
+        $activo = accesos::buscarDevicesUser($idUser)->first();
+        return response()->json($activo,200);
+    }
 }
