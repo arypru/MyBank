@@ -30,7 +30,6 @@ export default {
       { text: 'Inicio', icon: 'mdi-home', link:'/'  },
       { text: 'Transferencias', icon: 'mdi-account-group', link:'/transferencias'},
       { text: 'Productos', icon: 'mdi-card-account-details', link:'/productos'},
-      { text: 'Tarjetas', icon: 'mdi-credit-card-multiple', link:'/tarjetas' },
     ],
   }),
 }

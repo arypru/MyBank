@@ -10,7 +10,7 @@ import middlewarePipeline from "./middlewarePipeline";
 import VCuentaDetalle from "../views/VCuentaDetalle"
 import AppLayout from "@/layout/AppLayout";
 import VRouterList from "../views/VRouterList";
-import VUsuario from "../views/VUsuario"
+import VUsuario from "../views/VUsuario";
 
 Vue.use(VueRouter)
 
