@@ -28,10 +28,11 @@ class AuthController extends Controller
     public function login()
     {
         $user = User::where('nombre_user', request()->nombre_user)->first();
+
         if(isset($user->id)){
             $user->tokens()->delete();
 
-            if(Hash::check(request()->password, $user->password)){
+            if(Hash::check(sha1(request()->password), $user->password)){
                 $token_v1 = $user->createToken('token')->plainTextToken;
                 $user->token = $token_v1;
                 $user->save();
