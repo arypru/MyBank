@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::post('/modificar-descrip', [CuentaController::class, 'modificarDescripcion']);
 
     Route::apiResource('personas', PersonaController::class);
+    Route::apiResource('user', UserController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 

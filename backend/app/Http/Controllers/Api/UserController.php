@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Persona;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\PersonaController;
@@ -65,7 +66,19 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $persona = Persona::findOrFail($user->persona_id);
+        $fecha_mod = $user->updated_at->format('d/m/Y H:i:s');
+
+        $respuesta = [
+            'id' => $user->id,
+            'nombre_user' => $user->nombre_user,
+            'email'=> $user->email,
+            'telefono'=>$persona->telefono,
+            'ultima_modificacion'=>$fecha_mod,
+        ];
+
+        return response()->json($respuesta,200);
     }
 
     /**
