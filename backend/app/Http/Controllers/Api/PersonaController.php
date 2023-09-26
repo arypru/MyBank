@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Faker\Provider\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -39,7 +40,7 @@ class PersonaController extends Controller
             'telefono' => $request->telefono,
             'cuil'=>$request->cuil,
             'direccion' => $request->direccion,
-            'fecha_nacimiento'=> $request->fecha_nacimiento,
+            'fecha_nacimiento'=> Persona::setFechaNacimiento($request->fecha_nacimiento),
             'sexo'=> $request->fecha_nacimiento,
             'edad' => Persona::calcularEdad($fecha_actualForm, $request->fecha_nacimiento),
             'created_at' => Carbon::now()->format('d/m/Y H:i:s'),
@@ -59,8 +60,25 @@ class PersonaController extends Controller
 
     public function show(string $id)
     {
-        $unaPersona = DB::table('personas')->whereRaw('id =' . $id )->get();
-        return response()->json($unaPersona,200);
+
+        $unaPersona = Persona::findOrFail($id);
+
+        $respuesta =[
+            'id'=>$unaPersona->id,
+            'nombre' => $unaPersona->nombre,
+            'apellido' => $unaPersona->apellido,
+            'alta' => $unaPersona->created_at->format('d/m/Y H:i'),
+            'cuil'=> $unaPersona->cuil,
+            'direccion'=> $unaPersona->direccion,
+            'dni'=>$unaPersona->dni,
+            'edad'=>$unaPersona->edad,
+            'fecha_nacimiento'=> Persona::getFechaNacimiento($unaPersona->fecha_nacimiento),
+            'sexo'=>$unaPersona->sexo,
+            'telefono'=>$unaPersona->telefono,
+            'modificado'=>$unaPersona->updated_at->format('d/m/Y H:i'),
+        ];
+
+        return response()->json($respuesta,200);
     }
 
 

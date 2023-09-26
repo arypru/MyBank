@@ -10,60 +10,68 @@
 
       <div v-if="tab === 0">
         <v-subtitulo subtitulo="Información Personal"></v-subtitulo>
+
         <div class="d-flex flex-row Bricolage-Regular justify-space-around ">
           <div>
             <div>
               <p class="d-inline Bricolage-SemiBold">Nombres: </p>
-              <p class="d-inline"> Maria</p>
+              <p class="d-inline"> {{persona.nombre}} </p>
             </div>
 
             <div>
               <p class="d-inline Bricolage-SemiBold">Apellido: </p>
-              <p class="d-inline"> Perez</p>
+              <p class="d-inline"> {{persona.apellido}}</p>
             </div>
 
-            <div>
-              <p class="d-inline Bricolage-SemiBold">Correo Electronico: </p>
-              <p class="d-inline"> pruyas@gmail.com</p>
-            </div>
 
             <div>
               <p class="d-inline Bricolage-SemiBold">DNI: </p>
-              <p class="d-inline"> DNI</p>
+              <p class="d-inline"> {{persona.dni}}</p>
             </div>
 
             <div>
-              <p class="d-inline Bricolage-SemiBold">CUIT: </p>
-              <p class="d-inline"> pruyas@gmail.com</p>
+              <p class="d-inline Bricolage-SemiBold">CUIL: </p>
+              <p class="d-inline"> {{persona.cuil}} </p>
             </div>
 
             <div>
               <p class="d-inline Bricolage-SemiBold">Dirección: </p>
-              <p class="d-inline"> pruyas@gmail.com</p>
+              <p class="d-inline"> {{persona.direccion}}</p>
             </div>
             <div>
               <p class="d-inline Bricolage-SemiBold">Telefono: </p>
-              <p class="d-inline"> 3794784512 </p>
+              <p class="d-inline"> {{persona.telefono}} </p>
             </div>
 
             <div>
               <p class="d-inline Bricolage-SemiBold">Sexo: </p>
-              <p class="d-inline"> Femenino </p>
+              <p class="d-inline"> {{persona.sexo}} </p>
             </div>
 
             <div>
               <p class="d-inline Bricolage-SemiBold">Edad: </p>
-              <p class="d-inline"> 32 años </p>
+              <p class="d-inline"> {{persona.edad}} </p>
             </div>
 
             <div>
               <p class="d-inline Bricolage-SemiBold">Fecha de Nacimiento: </p>
-              <p class="d-inline"> 32 años </p>
+              <p class="d-inline">{{persona.fecha_nacimiento}} </p>
             </div>
 
           </div>
-          <div class="d-flex justify-center">
+          <div class="d-flex justify-center flex-column">
             <v-img height="200" width="200" :src="this.userIcon"/>
+
+            <div>
+              <p class="d-inline Bricolage-SemiBold">Alta: </p>
+              <p class="d-inline"> {{persona.alta}} </p>
+            </div>
+
+            <div>
+              <p class="d-inline Bricolage-SemiBold">Ultima modificacion: </p>
+              <p class="d-inline"> {{persona.modificado}} </p>
+            </div>
+
           </div>
         </div>
       </div>
@@ -115,6 +123,7 @@ import VSubtitulo from "@/components/VSubtitulo";
 import VUserIcon from "../assets/images/user_icon.png";
 import VTextFile from "@/components/VTextFile";
 import VLabelInput from "@/components/VLabelInput";
+import {mapActions, mapGetters} from "vuex";
 
 
 export default {
@@ -127,6 +136,20 @@ export default {
         'Sobre Mí', 'Configuración de cuenta', 'Detalle de Sesión',
       ] }
   },
+
+  computed: {
+    ...mapGetters(['persona']),
+  },
+
+  methods: {
+    ...mapActions(['getInformacionPersonal'])
+  },
+
+  mounted() {
+    this.getInformacionPersonal(this.$route.params.id);
+  },
+
+
 }
 </script>
 

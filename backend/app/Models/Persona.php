@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Persona extends Model
 {
@@ -17,6 +18,14 @@ class Persona extends Model
         return $fecha_actual - $fecha_nac;
     }
 
+    public function setFechaNacimiento($value)
+    {
+        return $this->attributes['fecha_nacimiento'] = Carbon::parse($value);
+    }
+
+    public static function getFechaNacimiento($value){
+        return Carbon::parse($value)->format('d/m/Y');
+    }
 
 
 }
