@@ -19,8 +19,7 @@ use App\Http\Controllers\Api\AuthController;
 */
 
 //Persona
-Route::apiResource('personas', PersonaController::class);
-Route::apiResource('users', UserController::class);
+
 Route::post('/verificar-dni/{dni}', [PersonaController::class, 'verificar_dni']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -32,6 +31,8 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::post('/dar-baja-cuenta/{idCuenta}', [CuentaController::class, 'darDeBaja']);
     Route::post('/modificar-alias', [CuentaController::class, 'modificarAlias']);
     Route::post('/modificar-descrip', [CuentaController::class, 'modificarDescripcion']);
+
+    Route::apiResource('personas', PersonaController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 

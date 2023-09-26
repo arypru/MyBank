@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Persona;
+
 class PersonaController extends Controller
 {
     /**
@@ -27,15 +29,21 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
+        $fecha_actual = Carbon::now();
+        $fecha_actualForm = $fecha_actual->format('d/m/Y');
+
         $persona = DB::table('personas')->insertGetId([
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
             'dni' => $request->dni,
-            'celular' => $request->celular,
+            'telefono' => $request->telefono,
             'cuil'=>$request->cuil,
             'direccion' => $request->direccion,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'fecha_nacimiento'=> $request->fecha_nacimiento,
+            'sexo'=> $request->fecha_nacimiento,
+            'edad' => Persona::calcularEdad($fecha_actualForm, $request->fecha_nacimiento),
+            'created_at' => Carbon::now()->format('d/m/Y H:i:s'),
+            'updated_at' => Carbon::now()->format('d/m/Y H:i:s'),
         ]);
 
         return response()->json([
