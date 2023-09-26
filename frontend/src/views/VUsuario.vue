@@ -136,7 +136,8 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="3" class="my-2 px-6">
-                <v-btn color="teal lighten-1" class="d-inline" elevation="2" icon @click="update.correo = !update.correo">
+                <v-btn color="teal lighten-1" class="d-inline" elevation="2" icon
+                       @click="update.correo = !update.correo">
                   <div v-if="update.correo">
                     <v-icon>mdi-pencil-off</v-icon>
                   </div>
@@ -145,7 +146,7 @@
                   </div>
                 </v-btn>
               </v-col>
-        </v-row>
+            </v-row>
           </v-col>
           <v-col cols="6">
             <v-label-input textoLabel="Telefono"/>
@@ -203,14 +204,14 @@
           <v-col cols="6">
             <v-label-input textoLabel="Repita su contraseña"/>
             <v-row no-gutters justify="center">
-                <v-text-field
-                    outlined
-                    class="d-inline"
-                    v-model="user.passv2"
-                    :disabled="!update.pass"
-                    type="text"
-                    color="teal lighten-1"
-                ></v-text-field>
+              <v-text-field
+                  outlined
+                  class="d-inline"
+                  v-model="user.passv2"
+                  :disabled="!update.pass"
+                  type="text"
+                  color="teal lighten-1"
+              ></v-text-field>
             </v-row>
           </v-col>
         </v-row>
@@ -223,23 +224,53 @@
 
       <div v-if="tab === 2">
         <v-subtitulo subtitulo="Detalle de Sesion Activa"></v-subtitulo>
+        <v-row no-gutters justify="center" align-content="center">
+          <v-col cols="12" lg="4" align-self="center">
+            <h4 class="teal--text lighten-1-text d-inline Bricolage-SemiBold">{{ sesionActiva.ultimaConexion }} </h4>
 
-        <div>
-          <p class="d-inline Bricolage-SemiBold">Nombre del equipo: </p>
-          <p class="d-inline"> Maria</p>
-        </div>
+            <div>
+              <p class="d-inline Bricolage-SemiBold">Nombre del equipo: </p>
+              <p class="d-inline"> {{ sesionActiva.servicioNombre }}</p>
+            </div>
 
-        <div>
-          <p class="d-inline Bricolage-SemiBold">Sistema Operativo: </p>
-          <p class="d-inline"> Maria</p>
-        </div>
+            <div>
+              <p class="d-inline Bricolage-SemiBold">Sistema Operativo: </p>
+              <p class="d-inline"> {{ sesionActiva.os }}</p>
+            </div>
 
-        <div>
-          <p class="d-inline Bricolage-SemiBold">Dirección IP: </p>
-          <p class="d-inline"> Maria</p>
-        </div>
+            <div>
+              <p class="d-inline Bricolage-SemiBold">Dirección IP: </p>
+              <p class="d-inline"> {{ sesionActiva.ip }}</p>
+            </div>
 
-        <v-subtitulo subtitulo="Detalle completo de inicios de sesion asociados a su cuenta"></v-subtitulo>
+            <div>
+              <p class="d-inline Bricolage-SemiBold">Navegador: </p>
+              <p class="d-inline"> {{ sesionActiva.browser }}</p>
+            </div>
+          </v-col>
+
+          <v-col cols="12" lg="8">
+            <v-data-table
+                :page.sync="page"
+                disable-sort
+                hide-default-footer
+                :headers="headers"
+                :items="Object.values(historialSesiones)"
+                :items-per-page="5"
+                class="elevation-4 mytable"
+                @page-count="pageCount = $event"
+            ></v-data-table>
+
+            <div v-if="pageCount > 0" class="text-center pt-2">
+              <v-pagination
+                  v-model="page"
+                  :length="pageCount"
+                  color="teal lighten-1"
+              ></v-pagination>
+            </div>
+          </v-col>
+
+        </v-row>
 
       </div>
     </v-tabs-items>
@@ -256,7 +287,7 @@ import {mapActions, mapGetters} from "vuex";
 
 
 export default {
-  components: {VSubtitulo, VLabelInput,VBotonPrimario},
+  components: {VSubtitulo, VLabelInput, VBotonPrimario},
   data() {
     return {
       userIcon: VUserIcon,
@@ -264,6 +295,9 @@ export default {
       itemsTabs: [
         'Sobre Mí', 'Configuración de cuenta', 'Detalle de Sesión',
       ],
+
+      page: 1,
+      pageCount: 0,
 
       update: {
         nombre_user: false,
@@ -278,23 +312,34 @@ export default {
         tel: this.$store.getters.usuario.telefono,
         pass: '---------- ',
         passv2: ' ---------- ',
-      }
+      },
+
+      headers: [
+        { text: 'Fecha y Hora', align: 'center', value: 'ultimaConexion' },
+        { text: 'Equipo',align: 'center', value: 'servicioNombre' },
+        { text: 'Ip',align: 'center', value: 'ip' },
+        { text: 'Navegador',align: 'center', value: 'browser' },
+        { text: 'Sist Op.', align: 'center',value: 'os' },
+      ],
+
+
 
     }
 
   },
 
   computed: {
-    ...mapGetters(['persona', 'usuario']),
+    ...mapGetters(['persona', 'usuario', 'sesionActiva','historialSesiones']),
   },
 
   methods: {
-    ...mapActions(['getInformacionPersonal', 'getConfiguracionCuenta'])
+    ...mapActions(['getInformacionPersonal', 'getConfiguracionCuenta', 'getSesionActiva','getHistorialSesiones']),
   },
-
   mounted() {
     this.getInformacionPersonal(this.$route.params.id);
     this.getConfiguracionCuenta(this.$route.params.id);
+    this.getSesionActiva(this.$route.params.id);
+    this.getHistorialSesiones(this.$route.params.id);
   },
 
 
@@ -305,4 +350,29 @@ export default {
 p {
   color: #2D2D2D;
 }
+
+.mytable thead {
+  background-color: #26A69A !important;
+  font-family: "Bricolage-SemiBold",serif !important;
+  color: white;
+}
+
+.v-data-table{
+  max-width: initial;
+  margin-right: 20px;
+}
+
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
+  font-family: "Bricolage-Regular",serif !important;
+  padding: 12px !important;
+}
+
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th > span {
+  color: white;
+}
+
+.v-data-table > .v-data-table__wrapper > table > tbody > tr:hover{
+  background-color: #B2DFDB !important;
+}
+
 </style>
