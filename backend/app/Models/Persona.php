@@ -14,13 +14,14 @@ class Persona extends Model
         return $this->hasOne(User::class);
     }
 
-    public static function calcularEdad($fecha_actual, $fecha_nac){
-        return $fecha_actual - $fecha_nac;
-    }
+    public static function calcularEdad($fecha_nac){
 
-    public function setFechaNacimiento($value)
-    {
-        return $this->attributes['fecha_nacimiento'] = Carbon::parse($value);
+        $fecha_actual = Carbon::now();
+        $fechaNacimiento = Carbon::createFromDate($fecha_nac);
+
+        $edad = $fechaNacimiento->diffInYears($fecha_actual);
+
+        return $edad;
     }
 
     public static function getFechaNacimiento($value){

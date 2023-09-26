@@ -30,8 +30,9 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        $fecha_actual = Carbon::now();
-        $fecha_actualForm = $fecha_actual->format('d/m/Y');
+
+        $fechaNacimiento = Carbon::createFromFormat('d/m/Y', $request->fecha_nacimiento);
+        $edad = Persona::calcularEdad($fechaNacimiento);
 
         $persona = DB::table('personas')->insertGetId([
             'nombre' => $request->nombre,
@@ -40,11 +41,11 @@ class PersonaController extends Controller
             'telefono' => $request->telefono,
             'cuil'=>$request->cuil,
             'direccion' => $request->direccion,
-            'fecha_nacimiento'=> Persona::setFechaNacimiento($request->fecha_nacimiento),
-            'sexo'=> $request->fecha_nacimiento,
-            'edad' => Persona::calcularEdad($fecha_actualForm, $request->fecha_nacimiento),
-            'created_at' => Carbon::now()->format('d/m/Y H:i:s'),
-            'updated_at' => Carbon::now()->format('d/m/Y H:i:s'),
+            'fecha_nacimiento'=> $fechaNacimiento,
+            'sexo'=> $request->sexo,
+            'edad' => $edad,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         return response()->json([
