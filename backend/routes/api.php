@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\PersonaController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CuentaController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AccesosController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,6 +35,8 @@ Route::middleware('auth:sanctum')->group(function ()
 
     Route::apiResource('personas', PersonaController::class);
     Route::apiResource('user', UserController::class);
+
+    Route::apiResource('accesos', AccesosController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 

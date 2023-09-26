@@ -35,9 +35,10 @@ class AccesosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(accesos $accesos)
+    public function show($idUser)
     {
-        //
+        $accesoUsuarios = accesos::buscarDevicesUser($idUser);
+        return response()->json($accesoUsuarios,200);
     }
 
     /**
