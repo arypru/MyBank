@@ -5,6 +5,7 @@ import createPersistedState from 'vuex-persistedstate'
 import auth from './modules/auth'
 import cuentas from './modules/cuentas'
 import persona from './modules/persona'
+import user from './modules/user'
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   modules:{
     auth,
     cuentas,
-    persona
+    persona,
+    user
   }
 })
