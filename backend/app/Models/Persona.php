@@ -9,9 +9,14 @@ class Persona extends Model
 {
     use HasFactory;
 
-
     public function user(){
         return $this->hasOne(User::class);
     }
+
+    public static function calcularEdad($fecha_actual, $fecha_nac){
+        return $fecha_actual - $fecha_nac;
+    }
+
+
 
 }

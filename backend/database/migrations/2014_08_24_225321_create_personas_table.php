@@ -17,9 +17,12 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('apellido');
             $table->integer('dni')->unique();
-            $table->string('celular');
+            $table->string('telefono');
             $table->bigInteger('cuil')->unique();
             $table->string('direccion');
+            $table->dateTime('fecha_nacimiento');
+            $table->integer('edad');
+            $table->set('sexo', ['Femenino', 'Masculino']);
             $table->boolean('baja')->default(false);
         });
     }
