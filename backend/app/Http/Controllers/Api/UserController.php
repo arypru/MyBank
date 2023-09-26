@@ -68,7 +68,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $persona = Persona::findOrFail($user->persona_id);
-        $fecha_mod = $user->updated_at->format('d/m/Y H:i:s');
+        $fecha_mod = $user->updated_at->format('d/m/Y H:i');
 
         $respuesta = [
             'id' => $user->id,
@@ -76,6 +76,7 @@ class UserController extends Controller
             'email'=> $user->email,
             'telefono'=>$persona->telefono,
             'ultima_modificacion'=>$fecha_mod,
+            "alta"=> $user->created_at->format('d/m/Y H:i'),
         ];
 
         return response()->json($respuesta,200);
