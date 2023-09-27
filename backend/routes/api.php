@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function ()
     Route::get('accesoActivo/{id}', [AccesosController::class, 'accesoActivo']);
 
     Route::get('/ver-cuentas-mybank/{userId}', [TransferenciasController::class, 'verCuentasMyBank']);
+    Route::get('/ver-cuentas-propias/{userId}', [TransferenciasController::class, 'verCuentasPropias']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
