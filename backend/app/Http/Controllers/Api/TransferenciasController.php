@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Devices;
+use App\Http\Controllers\Controller;
+use App\Models\Transferencias;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class DevicesController extends Controller
+class TransferenciasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +36,7 @@ class DevicesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Devices $devices)
+    public function show(Transferencias $transferencias)
     {
         //
     }
@@ -42,7 +44,7 @@ class DevicesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Devices $devices)
+    public function edit(Transferencias $transferencias)
     {
         //
     }
@@ -50,7 +52,7 @@ class DevicesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Devices $devices)
+    public function update(Request $request, Transferencias $transferencias)
     {
         //
     }
@@ -58,8 +60,19 @@ class DevicesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Devices $devices)
+    public function destroy(Transferencias $transferencias)
     {
         //
+    }
+
+
+    public function verCuentasMyBank($userId){
+
+        $cuentas = DB::table('cuentas')
+                    ->whereRaw('persona_id =' . $userId )
+                    ->whereRaw('banco_id =' . 1)
+                    ->get();
+
+        return response()->json([$cuentas], 200);
     }
 }

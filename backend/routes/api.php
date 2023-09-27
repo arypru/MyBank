@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CuentaController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AccesosController;
+use App\Http\Controllers\Api\TransferenciasController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,6 +39,8 @@ Route::middleware('auth:sanctum')->group(function ()
 
     Route::apiResource('accesos', AccesosController::class);
     Route::get('accesoActivo/{id}', [AccesosController::class, 'accesoActivo']);
+
+    Route::get('/ver-cuentas-mybank/{userId}', [TransferenciasController::class, 'verCuentasMyBank']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
