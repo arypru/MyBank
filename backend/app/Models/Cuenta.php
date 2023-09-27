@@ -235,4 +235,30 @@ class Cuenta extends Model
         return $saldo;
     }
 
+    public static function buscarBeneficiarioAlias($alias){
+
+        $query = DB::table('cuentas')
+            ->select(
+                'cuentas.id as idCuenta',
+                'cuentas.CBU as CBU',
+                'cuentas.alias as alias',
+                'cuentas.numeroCuenta as numeroCuenta',
+                'cuentas.isFavorita as isFavorita',
+                'cuentas.isCuentaPropia as isCuentaPropia',
+                'personas.nombre as nombreTitular',
+                'personas.apellido as apellidoTitular',
+                'personas.dni as dniTitular',
+                'bancos.nombre as descripcionBanco',
+                'bancos.logoUrl as logoBanco'
+            )
+            ->join('personas', 'personas.id', '=', 'cuentas.persona_id')
+            ->join('bancos', 'bancos.id','=', 'cuentas.banco_id')
+            ->join('tipo_cuentas', 'tipo_cuentas.id', '=', 'cuentas.tipocuenta_id')
+            ->where('cuentas.alias', 'LIKE', "%$alias%")
+            ->orderBy('cuentas.id')
+            ->get();
+
+        return $query;
+    }
+
 }
