@@ -142,4 +142,63 @@ class Cuenta extends Model
         return $query;
     }
 
+    public static function verCuentaId($cuenta_id){
+
+        $user = User::findOrFail(auth()->user()->getAuthIdentifier());
+
+        $query = DB::table('cuentas')
+            ->select(
+                'cuentas.id as idCuenta',
+                'cuentas.CBU as CBU',
+                'cuentas.alias as alias',
+                'cuentas.numeroCuenta as numeroCuenta',
+                'cuentas.isFavorita as isFavorita',
+                'cuentas.isCuentaPropia as isCuentaPropia',
+                'cuentas.saldoDisponible as saldoDisponible',
+                'cuentas.saldoBloqueado as saldoBloqueado',
+                'personas.nombre as nombreTitular',
+                'personas.apellido as apellidoTitular',
+                'personas.dni as dniTitular',
+                'bancos.nombre as descripcionBanco',
+                'bancos.logoUrl as logoBanco',
+                'tipo_cuentas.acronimo as acronimoTipoCuenta',
+                'tipo_cuentas.descripcion as tipoCuentaDescrip',
+                'monedas.descripcion as monedaDescrip',
+                'monedas.simbolo as monedaSimbolo',
+            )
+            ->join('personas', 'personas.id', '=', 'cuentas.persona_id')
+            ->join('bancos', 'bancos.id','=', 'cuentas.banco_id')
+            ->join('tipo_cuentas', 'tipo_cuentas.id', '=', 'cuentas.tipocuenta_id')
+            ->join('estados','estados.id','=','cuentas.estado_id')
+            ->join('monedas','tipo_cuentas.moneda_id','=','monedas.id')
+            ->where('cuentas.id', $cuenta_id)
+            ->where('cuentas.persona_id', $user->id)
+            ->orderBy('cuentas.id')
+            ->get();
+
+        return $query;
+    }
+
+
+    public static function obtenerSaldo($cuentaId){
+
+        $user = User::findOrFail(auth()->user()->getAuthIdentifier());
+
+        $saldo = 0;
+
+        $query = DB::table('cuentas')
+            ->select(
+                'cuentas.saldoDisponible as saldoDisponible',
+            )
+            ->where('cuentas.id', $cuentaId)
+            ->where('cuentas.persona_id', $user->id)
+            ->get();
+
+        foreach ($query as $valor) {
+            $saldo = $valor->saldoDisponible;
+        }
+
+        return $saldo;
+    }
+
 }
