@@ -33,7 +33,7 @@ class Transferencias extends Model
 
         $cuentasOrigen = DB::table('cuentas')
             ->select('cuentas.saldoDisponible as saldo')
-            ->whereRaw('persona_id =' . $user->id )
+            ->whereRaw('user_id =' . $user->id )
             ->whereRaw('banco_id =' . 1)
             ->whereRaw('id =' .$cuenta_origen_id)
             ->get();
@@ -47,6 +47,21 @@ class Transferencias extends Model
         return $total;
     }
 
+    public static function buscarBeneficiario($cuenta_benef_id){
+
+        $user_id = 0;
+
+        $cuentaDestinoTercero= DB::table('cuentas')
+            ->whereRaw('id =' . $cuenta_benef_id)
+            ->get();
+
+        foreach ($cuentaDestinoTercero as $valor) {
+            $user_id = $valor->persona_id;
+        }
+
+        return $user_id;
+    }
+
     public static function actualizarSaldoDestino($cuenta_dest_id, $monto){
 
         $saldo = 0;
@@ -55,8 +70,27 @@ class Transferencias extends Model
 
         $cuentasDestino = DB::table('cuentas')
             ->select('cuentas.saldoDisponible as saldo')
-            ->whereRaw('persona_id =' . $user->id )
+            ->whereRaw('user_id =' . $user->id )
             ->whereRaw('isCuentaPropia =' . 1)
+            ->whereRaw('id =' .$cuenta_dest_id)
+            ->get();
+
+        foreach ($cuentasDestino as $valor) {
+            $saldo = $valor->saldo;
+        }
+
+        $total = $saldo + $monto;
+
+        return $total;
+    }
+
+    public static function actualizarSaldoDestinoTercero($cuenta_dest_id, $beneficiario_id, $monto){
+
+        $saldo = 0;
+
+        $cuentasDestino = DB::table('cuentas')
+            ->select('cuentas.saldoDisponible as saldo')
+            ->whereRaw('persona_id =' . $beneficiario_id)
             ->whereRaw('id =' .$cuenta_dest_id)
             ->get();
 

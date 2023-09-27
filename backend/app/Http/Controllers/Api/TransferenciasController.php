@@ -94,6 +94,9 @@ class TransferenciasController extends Controller
 
         $user = User::findOrFail(auth()->user()->getAuthIdentifier());
 
+        $saldoAnteriorOrigen = Cuenta::obtenerSaldo($request->cuenta_origen_id);
+        $saldoAnteriorDestino = Cuenta::obtenerSaldo($request->cuenta_dest_id);
+
         $saldoActualizadoOrigen = Transferencias::actualizarSaldoOrigen($request->cuenta_origen_id, $request->importe);
         $saldoActualizadoDest = Transferencias::actualizarSaldoDestino($request->cuenta_dest_id, $request->importe);
 
@@ -122,9 +125,9 @@ class TransferenciasController extends Controller
             'importe' => $request->importe,
             'fecha_op' => Carbon::now(),
             'estado'=>'ACEPTADO',
-            'saldoAnteriorOrigen'=> Cuenta::obtenerSaldo($request->cuenta_origen_id),
+            'saldoAnteriorOrigen'=> $saldoAnteriorOrigen,
             'saldoActualizadoOrigen'=>$saldoActualizadoOrigen,
-            'saldoAnteriorDestino'=> Cuenta::obtenerSaldo($request->cuenta_dest_id),
+            'saldoAnteriorDestino'=> $saldoAnteriorDestino,
             'saldoActualizadoDestino'=>$saldoActualizadoDest,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
@@ -139,5 +142,53 @@ class TransferenciasController extends Controller
             $DetalleCuentaDestino,
             $DetalleTransferencia
         ], 200);
+    }
+
+    public function transferenciaTerceros(Request $request){
+
+        $user = User::findOrFail(auth()->user()->getAuthIdentifier());
+
+        $saldoAnteriorOrigen = Cuenta::obtenerSaldo($request->cuenta_origen_id);
+        $saldoActualizadoOrigen = Transferencias::actualizarSaldoOrigen($request->cuenta_origen_id, $request->importe);
+
+        $beneficiarioId = Transferencias::buscarBeneficiario($request->cuenta_benef_id);
+        $saldoActualizadoDest = Transferencias::actualizarSaldoDestinoTercero($request->cuenta_benef_id, $beneficiarioId, $request->importe);
+
+
+        $cuentaOrigen = DB::table('cuentas')
+            ->whereRaw('persona_id =' . $user->id )
+            ->whereRaw('banco_id =' . 1)
+            ->whereRaw('id =' . $request->cuenta_origen_id)
+            ->update(['saldoDisponible' => $saldoActualizadoOrigen]);
+
+        $transferenciaTerceros =
+            DB::table('transferencias')->insertGetId([
+                'usuario_origen_id' => $user->id,
+                'cuenta_origen_id' => $request->cuenta_origen_id,
+                'usuario_dest_id' => $beneficiarioId,
+                'cuenta_dest_id' => $request->cuenta_benef_id,
+                'tipo_transaccion'=>'Transf. a terceros',
+                'referencia' => $request->referencia,
+                'descripcion'=> $request->descripcion,
+                'moneda_id'=> $request->moneda_id,
+                'importe' => $request->importe,
+                'fecha_op' => Carbon::now(),
+                'estado'=>'ACEPTADO',
+                'saldoAnteriorOrigen'=> $saldoAnteriorOrigen,
+                'saldoActualizadoOrigen'=>$saldoActualizadoOrigen,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+
+        $DetalleCuentaOrigen = Cuenta::verCuentaId($request->cuenta_origen_id);
+        $DetalleCuentaBenef = Cuenta::verCuentaBeneficiario($request->cuenta_benef_id, $beneficiarioId);
+        $DetalleTransferencia = Transferencias::verTransferenciaId($transferenciaTerceros);
+
+        return response()->json([
+            $DetalleCuentaOrigen,
+            $DetalleCuentaBenef,
+            $DetalleTransferencia,
+        ], 200);
+
     }
 }

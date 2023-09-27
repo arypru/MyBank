@@ -32,7 +32,7 @@ class AuthController extends Controller
         if(isset($user->id)){
             $user->tokens()->delete();
 
-            if(Hash::check(sha1(request()->password), $user->password)){
+            if(Hash::check((request()->password), $user->password)){
                 $token_v1 = $user->createToken('token')->plainTextToken;
                 $user->token = $token_v1;
                 $user->save();
