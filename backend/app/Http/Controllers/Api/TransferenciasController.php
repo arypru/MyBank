@@ -75,4 +75,14 @@ class TransferenciasController extends Controller
 
         return response()->json([$cuentas], 200);
     }
+
+    public function verCuentasPropias($userId){
+
+        $cuentasPropias = DB::table('cuentas')
+            ->whereRaw('persona_id =' . $userId )
+            ->whereRaw('isCuentaPropia =' . 1)
+            ->get();
+
+        return response()->json([$cuentasPropias], 200);
+    }
 }
