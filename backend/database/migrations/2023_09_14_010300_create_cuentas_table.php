@@ -43,6 +43,11 @@ return new class extends Migration
             $table->foreign('estado_id')->references('id')
                 ->on('estados');
 
+            //usuario vinculado a la cuenta
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')
+                ->on('users');
+
 
             $table->timestamps();
         });
