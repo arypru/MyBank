@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cuenta;
 use App\Models\Transferencias;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Decimal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -84,5 +88,56 @@ class TransferenciasController extends Controller
             ->get();
 
         return response()->json([$cuentasPropias], 200);
+    }
+
+    public function transferenciaPropias(Request $request){
+
+        $user = User::findOrFail(auth()->user()->getAuthIdentifier());
+
+        $saldoActualizadoOrigen = Transferencias::actualizarSaldoOrigen($request->cuenta_origen_id, $request->importe);
+        $saldoActualizadoDest = Transferencias::actualizarSaldoDestino($request->cuenta_dest_id, $request->importe);
+
+        $cuentaOrigen = DB::table('cuentas')
+            ->whereRaw('persona_id =' . $user->id )
+            ->whereRaw('banco_id =' . 1)
+            ->whereRaw('id =' . $request->cuenta_origen_id)
+            ->update(['saldoDisponible' => $saldoActualizadoOrigen]);
+
+        $cuentaDestino = DB::table('cuentas')
+            ->whereRaw('persona_id =' . $user->id )
+            ->whereRaw('isCuentaPropia =' . 1)
+            ->whereRaw('id =' . $request->cuenta_dest_id)
+            ->update(['saldoDisponible' => $saldoActualizadoDest]);
+
+        $transferenciaPropia =
+            DB::table('transferencias')->insertGetId([
+            'usuario_origen_id' => $user->id,
+            'cuenta_origen_id' => $request->cuenta_origen_id,
+            'usuario_dest_id' => $user->id,
+            'cuenta_dest_id' => $request->cuenta_dest_id,
+            'tipo_transaccion'=>'Transf. a mi mismo',
+            'referencia' => $request->referencia,
+            'descripcion'=> $request->descripcion,
+            'moneda_id'=> $request->moneda_id,
+            'importe' => $request->importe,
+            'fecha_op' => Carbon::now(),
+            'estado'=>'ACEPTADO',
+            'saldoAnteriorOrigen'=> Cuenta::obtenerSaldo($request->cuenta_origen_id),
+            'saldoActualizadoOrigen'=>$saldoActualizadoOrigen,
+            'saldoAnteriorDestino'=> Cuenta::obtenerSaldo($request->cuenta_dest_id),
+            'saldoActualizadoDestino'=>$saldoActualizadoDest,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        $DetalleCuentaOrigen = Cuenta::verCuentaId($request->cuenta_origen_id);
+        $DetalleCuentaDestino = Cuenta::verCuentaId($request->cuenta_dest_id);
+        $DetalleTransferencia = Transferencias::verTransferenciaId($transferenciaPropia);
+
+        return response()->json([
+            $DetalleCuentaOrigen,
+            $DetalleCuentaDestino,
+            $DetalleTransferencia
+        ], 200);
     }
 }

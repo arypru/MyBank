@@ -40,11 +40,18 @@ return new class extends Migration
             $table->string('referencia');
             $table->string('descripcion');
 
-            $table->unsignedBigInteger('moneda_id')->unique();
+            $table->unsignedBigInteger('moneda_id');
             $table->foreign('moneda_id')->references('id')
                 ->on('monedas');
 
             $table->decimal('importe',8,2);
+
+            $table->decimal('saldoAnteriorOrigen',8,2)->default(00000000.00);
+            $table->decimal('saldoActualizadoOrigen',8,2)->default(00000000.00);
+
+            $table->decimal('saldoAnteriorDestino',8,2)->default(00000000.00);
+            $table->decimal('saldoActualizadoDestino',8,2)->default(00000000.00);
+
 
             $table->dateTime('fecha_op');
             $table->set('estado', ['ACEPTADO', 'RECHAZADO','EN PROCESO'])->default('EN PROCESO');
