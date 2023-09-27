@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Transferencias;
+use App\Http\Controllers\Controller;
+use App\Models\Devices;
 use Illuminate\Http\Request;
 
-class TransferenciasController extends Controller
+class DevicesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class TransferenciasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Transferencias $transferencias)
+    public function show(Devices $devices)
     {
         //
     }
@@ -42,7 +43,7 @@ class TransferenciasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Transferencias $transferencias)
+    public function edit(Devices $devices)
     {
         //
     }
@@ -50,7 +51,7 @@ class TransferenciasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Transferencias $transferencias)
+    public function update(Request $request, Devices $devices)
     {
         //
     }
@@ -58,7 +59,7 @@ class TransferenciasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Transferencias $transferencias)
+    public function destroy(Devices $devices)
     {
         //
     }
