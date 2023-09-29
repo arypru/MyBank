@@ -32,8 +32,9 @@ class TransferenciasController extends Controller
     public function verCuentasMyBank($userId){
 
         $cuentas = DB::table('cuentas')
-                    ->whereRaw('persona_id =' . $userId )
+                    ->whereRaw('user_id =' . $userId )
                     ->whereRaw('banco_id =' . 1)
+                    ->whereRaw('isCuentaPropia =' . 1)
                     ->get();
 
         return response()->json([$cuentas], 200);
@@ -60,13 +61,13 @@ class TransferenciasController extends Controller
         $saldoActualizadoDest = Transferencias::actualizarSaldoDestino($request->cuenta_dest_id, $request->importe);
 
         $cuentaOrigen = DB::table('cuentas')
-            ->whereRaw('persona_id =' . $user->id )
+            ->whereRaw('user_id =' . $user->id )
             ->whereRaw('banco_id =' . 1)
             ->whereRaw('id =' . $request->cuenta_origen_id)
             ->update(['saldoDisponible' => $saldoActualizadoOrigen]);
 
         $cuentaDestino = DB::table('cuentas')
-            ->whereRaw('persona_id =' . $user->id )
+            ->whereRaw('user_id =' . $user->id )
             ->whereRaw('isCuentaPropia =' . 1)
             ->whereRaw('id =' . $request->cuenta_dest_id)
             ->update(['saldoDisponible' => $saldoActualizadoDest]);

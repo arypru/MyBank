@@ -172,7 +172,7 @@ class Cuenta extends Model
             ->join('estados','estados.id','=','cuentas.estado_id')
             ->join('monedas','tipo_cuentas.moneda_id','=','monedas.id')
             ->where('cuentas.id', $cuenta_id)
-            ->where('cuentas.persona_id', $user->id)
+            ->where('cuentas.user_id', $user->id)
             ->orderBy('cuentas.id')
             ->get();
 
@@ -225,7 +225,7 @@ class Cuenta extends Model
                 'cuentas.saldoDisponible as saldoDisponible',
             )
             ->where('cuentas.id', $cuentaId)
-            ->where('cuentas.persona_id', $user->id)
+            ->where('cuentas.user_id', $user->id)
             ->get();
 
         foreach ($query as $valor) {
