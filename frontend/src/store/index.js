@@ -7,6 +7,7 @@ import cuentas from './modules/cuentas'
 import persona from './modules/persona'
 import user from './modules/user'
 import accesos  from './modules/accesos'
+import transferencias from "./modules/transferencias";
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     cuentas,
     persona,
     user,
-    accesos
+    accesos,
+    transferencias
   }
 })
