@@ -250,24 +250,7 @@
           </v-col>
 
           <v-col cols="12" lg="8">
-            <v-data-table
-                :page.sync="page"
-                disable-sort
-                hide-default-footer
-                :headers="headers"
-                :items="Object.values(historialSesiones)"
-                :items-per-page="5"
-                class="elevation-4 mytable"
-                @page-count="pageCount = $event"
-            ></v-data-table>
-
-            <div v-if="pageCount > 0" class="text-center pt-2">
-              <v-pagination
-                  v-model="page"
-                  :length="pageCount"
-                  color="teal lighten-1"
-              ></v-pagination>
-            </div>
+            <v-tabla :items="historialSesiones" :headers="headers"/>
           </v-col>
 
         </v-row>
@@ -284,10 +267,11 @@ import VUserIcon from "../assets/images/user_icon.png";
 import VLabelInput from "@/components/VLabelInput";
 import VBotonPrimario from "@/components/VBotonPrimario";
 import {mapActions, mapGetters} from "vuex";
+import VTabla from "@/components/VTabla";
 
 
 export default {
-  components: {VSubtitulo, VLabelInput, VBotonPrimario},
+  components: {VSubtitulo, VLabelInput, VBotonPrimario,VTabla},
   data() {
     return {
       userIcon: VUserIcon,
@@ -295,10 +279,6 @@ export default {
       itemsTabs: [
         'Sobre Mí', 'Configuración de cuenta', 'Detalle de Sesión',
       ],
-
-      page: 1,
-      pageCount: 0,
-
       update: {
         nombre_user: false,
         correo: false,
@@ -351,28 +331,5 @@ p {
   color: #2D2D2D;
 }
 
-.mytable thead {
-  background-color: #26A69A !important;
-  font-family: "Bricolage-SemiBold",serif !important;
-  color: white;
-}
-
-.v-data-table{
-  max-width: initial;
-  margin-right: 20px;
-}
-
-.v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
-  font-family: "Bricolage-Regular",serif !important;
-  padding: 12px !important;
-}
-
-.v-data-table > .v-data-table__wrapper > table > thead > tr > th > span {
-  color: white;
-}
-
-.v-data-table > .v-data-table__wrapper > table > tbody > tr:hover{
-  background-color: #B2DFDB !important;
-}
 
 </style>

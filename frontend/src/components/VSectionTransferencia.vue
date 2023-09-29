@@ -3,7 +3,7 @@
     <v-titulo-home titulo="Transferencias"/>
     <div class="d-flex flex-row justify-space-between align-center my-8">
       <div v-for="(item, i) in itemsCard" :key="i">
-        <v-boton-card :texto="item.text" :imagenurl="item.imagenurl"/>
+        <v-boton-card :link="item.link" :texto="item.text" :imagenurl="item.imagenurl"/>
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@ export default {
   data () {
     return {
       itemsCard: [
-        { text: `Nueva` + `\n` + `Transferencia`, imagenurl: newtransfer, link: '' },
+        { text: `Nueva` + `\n` + `Transferencia`, imagenurl: newtransfer, link: '/nueva-transferencia' },
         { text: `Ver` + `\n` + `Transferencias`, imagenurl: vertransfer, link: ''},
         { text: `Ver` + `\n` + `Beneficiarios`, imagenurl: verbenef, link:''},
       ],

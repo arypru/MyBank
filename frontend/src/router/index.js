@@ -11,6 +11,8 @@ import VCuentaDetalle from "../views/VCuentaDetalle"
 import AppLayout from "@/layout/AppLayout";
 import VRouterList from "../views/VRouterList";
 import VUsuario from "../views/VUsuario";
+import VTransferencias from "../views/VTransferencias"
+import VNewTransferencia from "../views/VNewTransferencia"
 
 Vue.use(VueRouter)
 
@@ -28,6 +30,18 @@ const routes = [
                 name: 'Home',
                 component: VHome,
                 meta: {title: 'Inicio', middleware: [auth] }
+            },
+            {
+                path: '/transferencias',
+                name: 'Transferencias',
+                component: VTransferencias,
+                meta: {title: 'Transferencias', middleware: [auth] }
+            },
+            {
+                path: '/nueva-transferencia',
+                name: 'Nueva Transferencia',
+                component: VNewTransferencia,
+                meta: {title: 'Nueva Transferencia', middleware: [auth] }
             },
             {
                 path: '/detalle/:id',
