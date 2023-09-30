@@ -23,14 +23,21 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
-  data: () => ({
-    selectedItem: 0,
-    items: [
-      { text: 'Inicio', icon: 'mdi-home', link:'/'  },
-      { text: 'Transferencias', icon: 'mdi-account-group', link:'/transferencias'},
-      { text: 'Productos', icon: 'mdi-card-account-details', link:'/productos'},
-    ],
-  }),
+  data () {
+    return {
+      selectedItem: 0,
+      items: [
+        { text: 'Inicio', icon: 'mdi-home', link:'/'  },
+        { text: 'Transferencias', icon: 'mdi-account-group', link:'/transferencias/'+`${this.$store.getters.user.id}`},
+      ],
+    }
+  },
+
+  computed: {
+    ...mapGetters(['user']),
+  },
 }
 </script>

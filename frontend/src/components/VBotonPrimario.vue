@@ -1,6 +1,6 @@
 <template>
-  <v-btn @click="$emit('click')" :to=linkPrimario class="white--text" color="teal lighten-1 text-capitalize"  rounded>
-    <h3>{{ textoBoton }}</h3>
+  <v-btn @click="$emit('click')" :to=linkPrimario class="white--text" color="teal lighten-1"  rounded>
+    <h3 class="font-weight-regular white--text text-capitalize">{{ textoBoton }}</h3>
     <v-icon right>{{ textoIcon }}</v-icon>
   </v-btn>
 </template>
