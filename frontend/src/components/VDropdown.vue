@@ -21,6 +21,7 @@
 
       <v-list>
         <v-list-item
+            class="Bricolage-Regular text-center"
             link
             v-for="item in items"
             :key="item.titulo"

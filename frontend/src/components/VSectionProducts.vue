@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-titulo-home titulo="Productos"/>
-    <div class="d-flex flex-row align-content-center my-8 flex-wrap">
+    <div class="d-flex flex-wrap justify-sm-center justify-md-space-between align-content-center my-8">
       <div v-for="(item,i) in cuentas" :key="i">
         <v-card-products :cuenta="item"/>
       </div>

@@ -32,7 +32,7 @@ const routes = [
                 meta: {title: 'Inicio', middleware: [auth] }
             },
             {
-                path: '/transferencias',
+                path: '/transferencias/:id',
                 name: 'Transferencias',
                 component: VTransferencias,
                 meta: {title: 'Transferencias', middleware: [auth] }

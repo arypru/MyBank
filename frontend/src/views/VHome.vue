@@ -1,6 +1,5 @@
 <template>
     <div>
-
       <v-col cols="auto">
         <v-dialog
             transition="dialog-top-transition"
@@ -20,7 +19,6 @@
             </v-card>
         </v-dialog>
       </v-col>
-
       <v-section-transferencia/>
       <v-section-products/>
     </div>
