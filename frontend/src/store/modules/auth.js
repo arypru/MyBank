@@ -8,6 +8,7 @@ const state = {
     error: false,
     authenticated:false,
     btn_login: false,
+    alert: false,
 }
 
 const getters = {
@@ -29,6 +30,10 @@ const getters = {
 
     user(state){
         return state.user
+    },
+
+    alerta(state){
+        return state.alert
     }
 }
 
@@ -38,6 +43,9 @@ const mutations = {
     },
     SET_MSG(state, value){
         state.msg = value
+    },
+    SET_ALERT(state, value){
+        state.alert = value
     },
     SET_USER (state, value) {
         state.user = value
@@ -54,32 +62,35 @@ const mutations = {
 }
 const actions = {
     login ({commit}, user) {
+        commit('SET_ALERT',false)
         commit('SET_MSG', {})
         commit('SET_ERROR',false)
 
-        axios.post(process.env.VUE_APP_API_URL + '/api/login', user)
-            .then (response => {
-                if(response.data.state === 'error'){
-                    console.log("sfs")
-                    commit('SET_MSG',response.data.message)
+            axios.post(process.env.VUE_APP_API_URL + '/api/login', user)
+                .then (response => {
+                    if(response.data.state === 'error'){
+                        commit('SET_MSG',response.data.message)
+                        commit('SET_ERROR',true)
+                        commit('SET_ALERT',true)
+                        commit('SET_AUTHENTICATED',false)
+                    }else{
+                        commit('SET_ALERT',false)
+                        commit('SET_TOKEN', response.data.token)
+                        commit('SET_AUTHENTICATED',true)
+                        commit('SET_MSG',response.data.message)
+                        commit('SET_USER',response.data.user)
+                        router.push({name:'Home'})
+                    }
+                })
+                .catch (error => {
+                    console.log(error)
                     commit('SET_ERROR',true)
+                    console.log(error.message)
+                    commit('SET_MSG',error.message)
+                    commit('SET_ALERT',true)
                     commit('SET_AUTHENTICATED',false)
-                }else{
-                    commit('SET_TOKEN', response.data.token)
-                    commit('SET_AUTHENTICATED',true)
-                    commit('SET_MSG',response.data.message)
-                    commit('SET_USER',response.data.user)
-                    router.push({name:'Home'})
-                }
-            })
-            .catch (error => {
-                console.log(error)
-                commit('SET_ERROR',true)
-                console.log(error.message)
-                commit('SET_MSG',error.message)
-                commit('SET_AUTHENTICATED',false)
-            })
-    },
+                })
+        },
 
     logout({commit}){
         axios.post(process.env.VUE_APP_API_URL+ '/api/logout')
