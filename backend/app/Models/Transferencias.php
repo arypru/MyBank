@@ -127,4 +127,5 @@ class Transferencias extends Model
 
         return $query;
     }
+
 }
