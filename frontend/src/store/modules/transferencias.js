@@ -7,11 +7,16 @@ const state = {
     transferenciaOrigen: {},
     transferenciaDestino: {},
     transferenciaPropia: {},
+    transferencias: {}
 }
 
 const getters = {
     cuentasMyBank(state){
         return state.cuentasMyBank
+    },
+
+    transferencias(state){
+        return state.transferencias
     },
 
     cuentasPropias(state){
@@ -60,6 +65,10 @@ const mutations = {
     SET_TRANSF_PROPIAS(state, value) {
         state.transferenciaPropia = value
     },
+
+    SET_TRANSF(state, value) {
+        state.transferencias = value
+    },
 }
 const actions = {
     getCuentasMyBank ({commit}, id_user) {
@@ -80,8 +89,6 @@ const actions = {
             .then (response => {
                 console.log(response)
                 commit('SET_PROPIAS',response.data[0])
-
-
             })
             .catch (error => {
                 console.log(error)
@@ -101,9 +108,18 @@ const actions = {
             .catch (error => {
                 console.log(error)
             })
+    },
+
+    verTransferencias({commit}, id_user){
+        axios.get(process.env.VUE_APP_API_URL + '/api/ver-transferencias/'+`${id_user}`)
+            .then (response => {
+                console.log(response.data[0])
+                commit('SET_TRANSF',response.data[0])
+            })
+            .catch (error => {
+                console.log(error)
+            })
     }
-
-
 }
 
 export default {
