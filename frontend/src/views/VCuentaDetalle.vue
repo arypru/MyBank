@@ -25,13 +25,15 @@
             <div id="DatosCuenta" class="">
               <p class="Bricolage-SemiBold">CBU: {{ cuenta.CBU }}</p>
               <p class="Bricolage-SemiBold">ALIAS: {{ cuenta.alias }}</p>
-              <p class="Bricolage-SemiBold">Tipo cuenta: {{ cuenta.acronimoTipoCuenta }}
-                {{ cuenta.tipoCuentaDescrip }}</p>
+              <p class="Bricolage-SemiBold">Descripción: {{ cuenta.descripcion }}</p>
+
             </div>
 
             <div id="DatosTitular" class="">
               <p class="Bricolage-SemiBold">Titular: {{ cuenta.apellidoTitular }} {{ cuenta.nombreTitular }}</p>
               <p class="Bricolage-SemiBold">Dni: {{ cuenta.dniTitular }} </p>
+              <p class="Bricolage-SemiBold">Tipo cuenta: {{ cuenta.acronimoTipoCuenta }}
+                {{ cuenta.tipoCuentaDescrip }}</p>
             </div>
           </div>
 
@@ -54,19 +56,24 @@
 
           <div v-if="this.$store.getters.openModal">
             <v-card rounded-xl>
-              <v-card-text class="pa-12">
-                <h4>Cambio de alias con éxito</h4>
+              <v-card-text class="pa-12" >
+
+                <div v-if="success">
+                  <v-img class="d-flex justify-center" height="auto" width="auto" :src=sucessIcon />
+                </div>
+                <div v-else>
+                  <v-img height="350" width="350" :src=errorIcon />
+                </div>
+
+                <h2 class="Bricolage-Bold text-center">{{ mostrar_msg }}</h2>
               </v-card-text>
 
-              <v-card-actions>
-                <v-btn
-                    color="teal lighten-1"
-                    text
-                    @click="showModalAlias = false"
-                >
+              <v-card-actions class="d-flex justify-center">
+                <v-btn color="teal lighten-1 text-center" text @click="showModalAlias = false">
                   Cerrar
                 </v-btn>
               </v-card-actions>
+
             </v-card>
           </div>
 
@@ -78,17 +85,67 @@
               </v-card-text>
               <v-card-actions class="d-flex justify-center">
                 <v-spacer></v-spacer>
-                <v-btn
-                    color="teal lighten-1"
-                    text
-                    @click="showModalAlias = false"
-                >
+                <v-btn color="teal lighten-1" text @click="showModalAlias = false">
+                  Cerrar
+                </v-btn>
+                <v-btn color="teal lighten-1" outlined @click="updateAlias()">
+                  Cambiar
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </div>
+
+        </v-dialog>
+
+        <v-dialog
+            overlay-color="black"
+            transition="dialog-top-transition"
+            max-width="600"
+            v-model="showModalDescrip"
+            persistent
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-boton-primario v-bind="attrs" v-on="on" @click="abrirModalModificarDescrip()" class="my-2" texto-icon="mdi-text" texto-boton="Modificar Descripción"/>
+          </template>
+
+          <div v-if="this.$store.getters.openModal">
+            <v-card rounded-xl>
+
+              <v-card-text class="pa-12" >
+                <div v-if="success">
+                  <v-img class="d-flex justify-center" height="auto" width="auto" :src=sucessIcon />
+                </div>
+                <div v-else>
+                  <v-img height="350" width="350" :src=errorIcon />
+                </div>
+                <h2 class="Bricolage-Bold text-center">{{ mostrar_msg }}</h2>
+              </v-card-text>
+
+              <v-card-actions class="d-flex justify-center">
+                <v-spacer></v-spacer>
+                <v-btn color="teal lighten-1" text @click="showModalDescrip = false">
+                  Cerrar
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </div>
+
+
+          <div v-else>
+            <v-card rounded-xl>
+              <v-card-text class="pa-12">
+                <v-label-input class="my-4" texto-label="Escriba la nueva descripcion"></v-label-input>
+                <v-text-file v-model="cuentaDescrip.descripcion" icon="mdi-pencil" placeholder-text="nuevo alias" :value="cuenta.alias"/>
+              </v-card-text>
+              <v-card-actions class="d-flex justify-center">
+                <v-spacer></v-spacer>
+                <v-btn color="teal lighten-1" text @click="showModalDescrip = false">
                   Cerrar
                 </v-btn>
                 <v-btn
                     color="teal lighten-1"
                     outlined
-                    @click="updateAlias()"
+                    @click="updateDescripcion()"
                 >
                   Cambiar
                 </v-btn>
@@ -99,9 +156,6 @@
         </v-dialog>
 
 
-
-
-        <v-boton-primario class="my-2" texto-icon="mdi-text" texto-boton="Modificar Descripción"/>
         <v-boton-primario @click="darBajaCuenta(cuenta.idCuenta)" class="my-2" texto-icon="mdi-close"
                           texto-boton="Desactivar Cuenta"/>
 
@@ -119,7 +173,8 @@ import VTituloHome from "@/components/VTituloHome";
 import VBotonPrimario from "@/components/VBotonPrimario";
 import VLabelInput from "@/components/VLabelInput";
 import VTextFile from "@/components/VTextFile";
-
+import success from "../assets/images/succes.svg"
+import error from "../assets/images/error.svg"
 import {mapActions, mapGetters} from "vuex";
 
 export default {
@@ -128,9 +183,19 @@ export default {
   data() {
     return {
       showModalAlias: false,
+      showModalDescrip: false,
+
+      sucessIcon : success,
+      errorIcon : error,
+
 
       cuentaAlias: {
         alias: '',
+        idCuenta: this.$store.getters.cuenta.idCuenta
+      },
+
+      cuentaDescrip: {
+        descripcion: '',
         idCuenta: this.$store.getters.cuenta.idCuenta
       }
 
@@ -138,7 +203,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['cuenta', 'openModalAlias', 'msg','openModal']),
+    ...mapGetters(['cuenta', 'openModalAlias', 'mostrar_msg','openModal','success']),
 
   },
 
@@ -146,12 +211,22 @@ export default {
     this.verDetalleCuenta(this.$route.params.id);
   },
 
+
   methods: {
-    ...mapActions(['limpiarEstadoModal','verDetalleCuenta', 'darBajaCuenta', 'cerrarModalAlias','modificarAlias']),
+    ...mapActions(['limpiarEstadoModal','verDetalleCuenta', 'darBajaCuenta', 'cerrarModalAlias','modificarAlias','modificarDescripcion']),
+
+    abrirModalModificarDescrip(){
+      this.limpiarEstadoModal()
+      this.showModalDescrip = true;
+    },
 
     abrirModalModificarAlias() {
       this.limpiarEstadoModal()
       this.showModalAlias = true;
+    },
+
+    updateDescripcion(){
+      this.modificarDescripcion(this.cuentaDescrip)
     },
 
     updateAlias(){
@@ -162,12 +237,12 @@ export default {
 </script>
 
 <style>
-.v-card {
-  transition: opacity .4s ease-in-out;
+.v-dialog{
+  background-color:white;
 }
 
-.v-card:not(.on-hover) {
-  opacity: 0.7;
+.v-card {
+  transition: opacity .4s ease-in-out;
 }
 
 .show-btns {

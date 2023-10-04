@@ -90,6 +90,8 @@ class CuentaController extends Controller
         $cuentaDescrip->descripcion = $request->descripcion;
         $cuentaDescrip->update();
 
-        return response()->json($cuentaDescrip, 200);
+        $cuentaUpdate = Cuenta::verDetalleCuenta($cuentaDescrip->numeroCuenta);
+
+        return response()->json($cuentaUpdate, 200);
     }
 }

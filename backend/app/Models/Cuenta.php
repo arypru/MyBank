@@ -78,6 +78,7 @@ class Cuenta extends Model
                     'cuentas.alias as alias',
                     'cuentas.numeroCuenta as numeroCuenta',
                     'cuentas.isFavorita as isFavorita',
+                    'cuentas.descripcion as descripcion',
                     'cuentas.isCuentaPropia as isCuentaPropia',
                     'cuentas.saldoDisponible as saldoDisponible',
                     'cuentas.saldoBloqueado as saldoBloqueado',
