@@ -79,7 +79,9 @@ class CuentaController extends Controller
         $cuentaAlias->alias = $request->alias;
         $cuentaAlias->update();
 
-        return response()->json($cuentaAlias, 200);
+       $cuentaUpdate = Cuenta::verDetalleCuenta($cuentaAlias->numeroCuenta);
+
+        return response()->json($cuentaUpdate, 200);
     }
 
     public function modificarDescripcion(Request $request){
