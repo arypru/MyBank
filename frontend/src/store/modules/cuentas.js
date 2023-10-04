@@ -7,7 +7,8 @@ const state = {
     user_id: '',
     cuenta: {},
     openModal: false,
-    msg: '',
+    msg: "ola",
+    success: false,
 }
 
 const getters = {
@@ -15,11 +16,15 @@ const getters = {
         return state.cuentas
     },
 
+    success(state){
+        return state.success
+    },
+
     cuenta(state){
         return state.cuenta
     },
 
-    msg(state){
+    mostrar_msg(state){
         return state.msg
     },
 
@@ -39,6 +44,14 @@ const mutations = {
 
     SET_MODAL (state, value){
         state.openModal = value
+    },
+
+    SET_MSG (state, value){
+        state.msg = value
+    },
+
+    SET_SUCCESS (state, value){
+        state.success = value
     }
 }
 const actions = {
@@ -88,22 +101,47 @@ const actions = {
         console.log(alias)
         axios.post(process.env.VUE_APP_API_URL + '/api/modificar-alias', alias)
             .then (response => {
-                console.log(response)
+                commit('SET_SUCCESS', true)
                 commit('SET_CUENTA', response.data[0])
-                commit('SET_MODAL', true)
                 commit('SET_MSG', "Alias cambiado con éxito")
+                commit('SET_MODAL', true)
+
 
             })
             .catch (error => {
                 console.log(error)
+                commit('SET_SUCCESS', false)
+                commit('SET_MSG', "Oops, al parecer ocurrio un error")
+                commit('SET_MODAL', true)
+
+            })
+    },
+
+    modificarDescripcion({commit}, alias){
+        console.log(alias)
+        axios.post(process.env.VUE_APP_API_URL + '/api/modificar-descrip', alias)
+            .then (response => {
+                console.log(response)
+                commit('SET_SUCCESS', true)
+                commit('SET_CUENTA', response.data[0])
+                commit('SET_MODAL', true)
+                commit('SET_MSG', "Descripción cambiada con éxito")
+
+            })
+            .catch (error => {
+                console.log(error)
+                commit('SET_SUCCESS', false)
                 commit('SET_MODAL', true)
                 commit('SET_MSG', "Oops, al parecer ocurrio un error")
             })
     },
 
+
+
     limpiarEstadoModal({commit}){
         commit('SET_MODAL', false)
         commit('SET_MSG', '')
+        commit('SET_SUCCESS', '')
     }
 
 }

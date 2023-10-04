@@ -2,20 +2,6 @@
  <div>
    <v-titulo-home titulo="Transferencias"/>
    <v-row class="my-2">
-
-     <!--
-     <v-col lg="4" cols="12" align-self="center">
-       <v-label-input class="mb-2" texto-label="CUIT Beneficiario"/>
-       <v-text-file icon="mdi-account-outline" placeholder-text="CUIT del beneficiario" value="g"/>
-     </v-col>
-     <v-col lg="2" cols="12" align-self="center">
-       <v-btn elevation="2" class="white--text" color="teal lighten-1" fab>
-         <v-icon>
-           mdi-magnify
-         </v-icon>
-       </v-btn>
-      </v-col>-->
-
      <v-col lg="6" cols="12" class="d-flex flex-column justify-center">
        <v-boton-primario linkPrimario="/nueva-transferencia" class="my-2" texto-icon="mdi-plus" texto-boton="Nueva Transferencia"/>
        <!--<v-boton-primario class="my-2" texto-icon="mdi-account-multiple-outline" texto-boton="Ver Beneficiarios"/>-->
