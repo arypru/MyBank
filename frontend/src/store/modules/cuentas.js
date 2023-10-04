@@ -7,6 +7,7 @@ const state = {
     user_id: '',
     cuenta: {},
     openModal: false,
+    msg: '',
 }
 
 const getters = {
@@ -80,6 +81,29 @@ const actions = {
 
     cerrarModal ({commit}){
         commit('SET_MODAL', false)
+    },
+
+
+    modificarAlias({commit}, alias){
+        console.log(alias)
+        axios.post(process.env.VUE_APP_API_URL + '/api/modificar-alias', alias)
+            .then (response => {
+                console.log(response)
+                commit('SET_CUENTA', response.data[0])
+                commit('SET_MODAL', true)
+                commit('SET_MSG', "Alias cambiado con éxito")
+
+            })
+            .catch (error => {
+                console.log(error)
+                commit('SET_MODAL', true)
+                commit('SET_MSG', "Oops, al parecer ocurrio un error")
+            })
+    },
+
+    limpiarEstadoModal({commit}){
+        commit('SET_MODAL', false)
+        commit('SET_MSG', '')
     }
 
 }

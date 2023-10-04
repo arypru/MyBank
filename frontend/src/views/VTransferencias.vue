@@ -1,7 +1,6 @@
 <template>
  <div>
    <v-titulo-home titulo="Transferencias"/>
-
    <v-row class="my-2">
 
      <!--
@@ -48,26 +47,11 @@ export default {
         { text: 'Importe', align: 'center', value: 'importe' },
         { text: 'Estado', align: 'center',value: 'estado' },
       ],
-
-      desserts: [
-        {
-          id: 'Frozen Yogurt',
-          tipo_transaccion: 159,
-          referencia: 6.0,
-          fecha_op: 44,
-          saldoAnteriorOrigen: 24,
-          saldoActualizadoOrigen:44,
-          estado: 4.0,
-          moneda_Desp: 1,
-          descripcion: 'ola',
-          nombreTitular: 'pepe',
-        }
-      ]
     }
   },
 
   computed: {
-    ...mapGetters(['transferencias']),
+    ...mapGetters(['transferencias','openModalAlias','msg']),
   },
 
   mounted() {
@@ -76,11 +60,8 @@ export default {
 
   methods: {
 
-    ...mapActions(['verTransferencias']),
+    ...mapActions(['verTransferencias', 'cerrarModalAlias']),
 
-    mostrarSaldos(saldoAnt, saldoAct){
-      return saldoAnt + saldoAct
-    }
   }
 
 }
