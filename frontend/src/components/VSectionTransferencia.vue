@@ -15,6 +15,8 @@ import VTituloHome from "../components/VTituloHome"
 
 import newtransfer from "../assets/images/transferencia-bancaria.svg";
 import vertransfer from "../assets/images/factura.svg";
+import transfterceros from "../assets/images/transf-terceros.png";
+
 //import verbenef from "../assets/images/cuenta-de-usuario.svg"
 
 import {mapGetters} from "vuex";
@@ -25,7 +27,8 @@ export default {
   data () {
     return {
       itemsCard: [
-        { text: `Nueva` + `\n` + `Transferencia`, imagenurl: newtransfer, link: '/nueva-transferencia' },
+        { text: `Transferencia` + `\n` + `a mis cuentas`, imagenurl: newtransfer, link: '/nueva-transferencia' },
+        { text: `Transferencia` + `\n` + `a terceros`, imagenurl: transfterceros, link: '/nueva-transferencia' },
         { text: `Ver` + `\n` + `Transferencias`, imagenurl: vertransfer, link: '/transferencias/'+`${this.$store.getters.user.id}`},
         //{ text: `Ver` + `\n` + `Beneficiarios`, imagenurl: verbenef, link:''},
       ],
