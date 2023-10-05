@@ -9,9 +9,15 @@ const state = {
     openModal: false,
     msg: "ola",
     success: false,
+    loading: true,
 }
 
 const getters = {
+
+    loading(state){
+        return state.loading
+    },
+
     cuentas(state){
         return state.cuentas
     },
@@ -52,13 +58,19 @@ const mutations = {
 
     SET_SUCCESS (state, value){
         state.success = value
+    },
+
+    SET_LOADING (state, value){
+        state.loading = value
     }
 }
 const actions = {
     async verCuentasUsuarios ({commit}, userId) {
+        commit('SET_LOADING', true)
         await axios.get(process.env.VUE_APP_API_URL + '/api/ver-cuentas-usuarios/'+`${userId}`)
             .then (response => {
                     console.log(response)
+                    commit('SET_LOADING', false)
                     commit('SET_CUENTAS', response.data.cuentas)
             })
             .catch (error => {
@@ -68,9 +80,10 @@ const actions = {
 
      verDetalleCuenta ({commit}, numeroCuenta) {
          commit('SET_CUENTA', {})
+         commit('SET_LOADING', true)
          axios.get(process.env.VUE_APP_API_URL + '/api/ver-detalle-cuenta/'+`${numeroCuenta}`)
             .then (response => {
-                console.log(response)
+                commit('SET_LOADING', false)
                 commit('SET_CUENTA', response.data.cuenta[0])
             })
             .catch (error => {
@@ -79,10 +92,10 @@ const actions = {
     },
 
     darBajaCuenta ({commit}, idCuenta) {
-        console.log("dar de baja")
+        commit('SET_LOADING', true)
         axios.post(process.env.VUE_APP_API_URL + '/api/dar-baja-cuenta/'+`${idCuenta}`)
             .then (response => {
-                console.log(response)
+                commit('SET_LOADING', false)
                 commit('SET_MODAL', true)
                 commit('SET_MSG', response.data.msg)
                 router.push({name:'Home'})
@@ -98,9 +111,10 @@ const actions = {
 
 
     modificarAlias({commit}, alias){
-        console.log(alias)
+        commit('SET_LOADING', true)
         axios.post(process.env.VUE_APP_API_URL + '/api/modificar-alias', alias)
             .then (response => {
+                commit('SET_LOADING', false)
                 commit('SET_SUCCESS', true)
                 commit('SET_CUENTA', response.data[0])
                 commit('SET_MSG', "Alias cambiado con éxito")
@@ -118,10 +132,11 @@ const actions = {
     },
 
     modificarDescripcion({commit}, alias){
-        console.log(alias)
+        commit('SET_LOADING', true)
         axios.post(process.env.VUE_APP_API_URL + '/api/modificar-descrip', alias)
             .then (response => {
                 console.log(response)
+                commit('SET_LOADING', false)
                 commit('SET_SUCCESS', true)
                 commit('SET_CUENTA', response.data[0])
                 commit('SET_MODAL', true)
