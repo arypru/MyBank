@@ -81,7 +81,7 @@
             <v-card rounded-xl>
               <v-card-text class="pa-12">
                 <v-label-input class="my-4" texto-label="Escriba el nuevo alias"></v-label-input>
-                <v-text-file v-model="cuentaAlias.alias" icon="mdi-pencil" placeholder-text="nuevo alias" :value="cuenta.alias"/>
+                <v-text-file v-model="cuentaAlias.alias" icon="mdi-pencil" placeholder-text="......" :value="cuenta.alias"/>
               </v-card-text>
               <v-card-actions class="d-flex justify-center">
                 <v-spacer></v-spacer>
@@ -161,7 +161,31 @@
 
       </v-col>
     </v-row>
-    <v-titulo-home titulo="Movimientos"/>
+    <v-titulo-home class="my-6" titulo="Movimientos"/>
+
+    <v-row justify="center" class="mb-5">
+      <v-col lg="6" cols="12">
+        <v-btn :color="ingreso ? 'teal lighten-1 white--text' : 'white'" @click="ingreso = true" class="ma-2 " block rounded>
+          Ingresos
+          <v-icon right>mdi-arrow-up-thick</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col lg="6" cols="12">
+        <v-btn :class="ingreso ? 'white' : 'teal lighten-1 white--text'" @click="ingreso = false" class="ma-2" block rounded>
+          Egresos
+          <v-icon right>mdi-arrow-down-thick</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+
+    {{this.$store.getters.cuenta.idCuenta}}
+    <div v-if="ingreso">
+      <v-tabla :loading="loadingT" nodatatext="Al parecer no contiene ingresos. :( " :headers="headers" :items="ver_ingresos"/>
+    </div>
+
+    <div v-else>
+      <v-tabla :loading="loadingT" nodatatext="Al parecer no contiene egresos. Realiza una transferencia para registrar egresos" :headers="headers" :items="ver_egresos"/>
+    </div>
   </div>
 
 
@@ -175,10 +199,13 @@ import VLabelInput from "@/components/VLabelInput";
 import VTextFile from "@/components/VTextFile";
 import success from "../assets/images/succes.svg"
 import error from "../assets/images/error.svg"
+import VTabla from "@/components/VTabla";
+
+
 import {mapActions, mapGetters} from "vuex";
 
 export default {
-  components: {VTituloHome, VBotonPrimario, VLabelInput, VTextFile},
+  components: {VTituloHome, VBotonPrimario, VLabelInput, VTextFile, VTabla},
 
   data() {
     return {
@@ -188,6 +215,7 @@ export default {
       sucessIcon : success,
       errorIcon : error,
 
+      ingreso: true,
 
       cuentaAlias: {
         alias: '',
@@ -197,23 +225,41 @@ export default {
       cuentaDescrip: {
         descripcion: '',
         idCuenta: this.$store.getters.cuenta.idCuenta
-      }
+      },
+
+      headers: [
+        { text: 'Nro Operacion', align: 'center', value: 'id' },
+        { text: 'Fecha',align: 'center', value: 'fecha_op' },
+        { text: 'Tipo Transaccion',align: 'center', value: 'tipo_transaccion' },
+        { text: 'Referencia',align: 'center', value: 'referencia' },
+        { text: 'Descrip', align: 'center',value: 'descripcion' },
+        { text: 'Destino alias', align: 'center', value: 'aliasDestino' },
+        { text: 'Importe', align: 'center', value: 'importe' },
+        { text: 'Estado', align: 'center',value: 'estado' },
+      ],
 
     }
   },
 
   computed: {
-    ...mapGetters(['cuenta', 'openModalAlias', 'mostrar_msg','openModal','success']),
-
+    ...mapGetters(['cuenta', 'openModalAlias', 'mostrar_msg','openModal','success', 'user','ver_egresos','ver_ingresos','loadingT']),
   },
 
   mounted() {
     this.verDetalleCuenta(this.$route.params.id);
+    this.cargarMovimientos()
   },
 
-
   methods: {
-    ...mapActions(['limpiarEstadoModal','verDetalleCuenta', 'darBajaCuenta', 'cerrarModalAlias','modificarAlias','modificarDescripcion']),
+    ...mapActions(['limpiarEstadoModal','verDetalleCuenta', 'darBajaCuenta', 'cerrarModalAlias','modificarAlias','modificarDescripcion', 'verMovimientos']),
+
+    cargarMovimientos(){
+      let movimientos = {
+        idUsuario: this.$store.getters.usuario.id,
+        cuentaNumero: this.$route.params.id
+      }
+       this.verMovimientos(movimientos)
+    },
 
     abrirModalModificarDescrip(){
       this.limpiarEstadoModal()

@@ -14,37 +14,61 @@
         Seleccione una cuenta desde donde quiere realizar la transferencia
 
         <div class="d-flex flex-row align-content-center my-3 flex-wrap">
-          <div v-for="item in cuentasMyBank" :key="item.id">
-            <v-hover v-slot="{ hover }">
-              <v-card
-                  @click="seleccionarCuentaOrigen(item)"
-                  class="mx-2 my-3 rounded-xl Bricolage-Regular"
-                  max-width="220"
-                  outlined
-                  hover
-                  :elevation="hover ? 4 : 2"
-                  :class="hover ? 'teal lighten-5' : ''"
 
-              >
-                <v-list-item three-line>
-                  <v-list-item-content>
-                    <div class="text-overline mb-2">
-                      CA Caja de Ahorro
-                    </div>
-                    <v-list-item-title class="text-h5">
-                      <p class="Bricolage-SemiBold teal--text text--lighten-1">{{ item.saldoDisponible }}</p>
-                    </v-list-item-title>
-                    <v-list-item-subtitle>
-                      <p class="Bricolage-SemiBold">{{ item.CBU }}</p>
-                    </v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-card>
-            </v-hover>
+          <div v-if="loadingT" class="d-flex flex-row align-content-center flex-wrap">
+            <v-skeleton-loader
+                class="mx-auto rounded-xl mx-2 my-3"
+                width="220"
+                type="card"
+            ></v-skeleton-loader>
+
+            <v-skeleton-loader
+                class="mx-auto rounded-xl mx-2 my-3"
+                width="220"
+                type="card"
+            ></v-skeleton-loader>
+
+            <v-skeleton-loader
+                class="mx-auto rounded-xl mx-2 my-3"
+                width="220"
+                type="card"
+            ></v-skeleton-loader>
           </div>
+
+          <div v-else class="d-flex flex-row align-content-center flex-wrap">
+            <div v-for="item in cuentasMyBank" :key="item.id">
+              <v-hover v-slot="{ hover }">
+                <v-card
+                    @click="seleccionarCuentaOrigen(item)"
+                    class="mx-2 my-3 rounded-xl Bricolage-Regular"
+                    max-width="220"
+                    outlined
+                    hover
+                    :elevation="hover ? 4 : 2"
+                    :class="hover ? 'teal lighten-5' : ''"
+
+                >
+                  <v-list-item three-line>
+                    <v-list-item-content>
+                      <div class="text-overline mb-2">
+                        CA Caja de Ahorro
+                      </div>
+                      <v-list-item-title class="text-h5">
+                        <p class="Bricolage-SemiBold teal--text text--lighten-1">{{ item.saldoDisponible }}</p>
+                      </v-list-item-title>
+                      <v-list-item-subtitle>
+                        <p class="Bricolage-SemiBold">{{ item.CBU }}</p>
+                      </v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-card>
+              </v-hover>
+            </div>
+          </div>
+
         </div>
 
-        <v-btn color="teal lighten-1" class="white--text" @click="e6 = 2">
+        <v-btn color="teal lighten-1" class="white--text" @click="cargarPaso2()">
           Continuar
         </v-btn>
       </v-stepper-content>
@@ -59,8 +83,28 @@
       <v-stepper-content step="2">
         Seleccione la cuenta a la que quiere transferir
 
-        <div class="d-flex flex-row align-content-center my-3 flex-wrap">
-          <div v-for="item in cuentasPropias" :key="item.id">
+        <div v-if="loadingT" class="d-flex flex-row align-content-center flex-wrap">
+          <v-skeleton-loader
+              class="mx-auto rounded-xl mx-2 my-3"
+              width="220"
+              type="card"
+          ></v-skeleton-loader>
+
+          <v-skeleton-loader
+              class="mx-auto rounded-xl mx-2 my-3"
+              width="220"
+              type="card"
+          ></v-skeleton-loader>
+
+          <v-skeleton-loader
+              class="mx-auto rounded-xl mx-2 my-3"
+              width="220"
+              type="card"
+          ></v-skeleton-loader>
+        </div>
+
+        <div v-else class="d-flex flex-row align-content-center my-3 flex-wrap">
+          <div v-for="item in cuentasTransferir" :key="item.id">
             <v-hover v-slot="{ hover }">
               <v-card
                   @click="seleccionarCuentaDestino(item)"
@@ -224,12 +268,15 @@ export default {
         referencia: '',
         descripcion: '',
         moneda_id: ''
-      }
+      },
+
+    cuentasTransferir: {},
+
     }
   },
 
   computed: {
-    ...mapGetters(['cuentasMyBank', 'cuentasPropias', 'user', 'transferenciaOrigen','transferenciaDestino','transferenciaPropia']),
+    ...mapGetters(['cuentasMyBank', 'cuentasPropias', 'user', 'transferenciaOrigen','transferenciaDestino','transferenciaPropia','loadingT']),
   },
 
   methods: {
@@ -237,7 +284,6 @@ export default {
 
     seleccionarCuentaOrigen(item) {
       this.transf.cuenta_origen_id = item.id
-      this.e6 = 2
     },
 
     seleccionarCuentaDestino(item) {
@@ -278,6 +324,16 @@ export default {
       this.e6 = 1
 
       router.push({name:'Home'})
+    },
+
+    cargarPaso2() {
+      const miArray = this.$store.getters.cuentasPropias;
+      const elementoAEliminar = this.transf.cuenta_origen_id;
+      console.log(elementoAEliminar)
+      let respuesta = miArray.filter(item => item.id !== elementoAEliminar);
+      console.log(respuesta)
+      this.cuentasTransferir = respuesta;
+      this.e6 = 2
     }
   },
 
