@@ -31,7 +31,6 @@ class TransferenciasController extends Controller
 
     public function verCuentasMyBank($userId)
     {
-
         $cuentas = DB::table('cuentas')
             ->whereRaw('user_id =' . $userId)
             ->whereRaw('banco_id =' . 1)
@@ -183,4 +182,56 @@ class TransferenciasController extends Controller
 
         return response()->json([$transferencias], 200);
     }
+
+
+    public function verMovimientos(Request $request){
+
+        $cuenta = Cuenta::verDetalleCuenta($request->cuentaNumero);
+
+        foreach ($cuenta as $valor) {
+            $idCuenta = $valor->idCuenta;
+        }
+
+        $transfQuitar = DB::table('transferencias')
+            ->where('transferencias.cuenta_origen_id', '=', $idCuenta)
+            ->where('transferencias.usuario_origen_id', '=', $request->idUsuario)
+            ->join('cuentas', 'cuentas.id', '=', 'transferencias.cuenta_dest_id' )
+            ->orderByDesc('transferencias.id')
+            ->get([
+                'transferencias.id as id',
+                'transferencias.tipo_transaccion as tipo_transaccion',
+                'transferencias.referencia as referencia',
+                'transferencias.descripcion as descripcion',
+                'transferencias.importe as importe',
+                'transferencias.fecha_op as fecha_op',
+                'transferencias.estado as estado',
+                'cuentas.numeroCuenta as numero_cuentaDest',
+                'cuentas.alias as aliasDestino'
+            ]);
+
+        $transfAdd = DB::table('transferencias')
+            ->where('transferencias.cuenta_dest_id', '=', $idCuenta)
+            ->join('cuentas', 'cuentas.id', '=', 'transferencias.cuenta_dest_id' )
+            ->orderByDesc('transferencias.id')
+            ->get([
+                'transferencias.id as id',
+                'transferencias.tipo_transaccion as tipo_transaccion',
+                'transferencias.referencia as referencia',
+                'transferencias.descripcion as descripcion',
+                'transferencias.importe as importe',
+                'transferencias.fecha_op as fecha_op',
+                'transferencias.estado as estado',
+                'cuentas.numeroCuenta as numero_cuentaDest',
+                'cuentas.alias as aliasDestino'
+            ]);
+
+        $movimientosCuentas = [
+            'egresos' => $transfQuitar,
+            'ingreso' => $transfAdd
+        ];
+
+        return response()->json([$movimientosCuentas], 200);
+
+    }
+
 }

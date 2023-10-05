@@ -262,4 +262,5 @@ class Cuenta extends Model
         return $query;
     }
 
+
 }

@@ -31,7 +31,7 @@ class accesos extends Model
             )
             ->join('devices', 'devices.id', '=', 'accesos.devices_id')
             ->where('user_id', $id_user)
-            ->orderByDesc('accesos.ultima_conexion')
+            ->orderByDesc('accesos.id')
             ->get();
 
         return $query;

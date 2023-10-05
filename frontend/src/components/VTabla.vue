@@ -7,8 +7,10 @@
         :headers="this.headers"
         :items="Object.values(items)"
         :items-per-page="10"
+        :no-data-text="nodatatext"
         class="elevation-4 mytable"
         @page-count="pageCount = $event"
+        :loading="loading"
     ></v-data-table>
 
     <div v-if="pageCount > 0" class="text-center pt-2">
@@ -31,7 +33,12 @@ export default {
     items: {
       type: Array,
       required: false
-    }
+    },
+    nodatatext:{
+      type: String,
+      required: false
+    },
+    loading: {type: Boolean, default: false, required: false},
   },
 
   data(){
