@@ -12,37 +12,40 @@ use Illuminate\Support\Facades\DB;
 
 class CuentaController extends Controller
 {
-    public function verTodasLasCuentasUsuario ($id){
+    public function verTodasLasCuentasUsuario($id)
+    {
 
         $cuentas = Cuenta::TodasCuenta($id);
 
-        if($cuentas){
+        if ($cuentas) {
             return response()->json([
-                'cuentas'=> $cuentas
+                'cuentas' => $cuentas
             ], 200);
-        }else{
+        } else {
             return response()->json([
-                'msg'=> 'no posee cuentas asociada al usuario'
+                'msg' => 'no posee cuentas asociada al usuario'
             ], 200);
         }
     }
 
-    public function verDetalleCuenta ($nrocuenta){
+    public function verDetalleCuenta($nrocuenta)
+    {
 
         $cuenta = Cuenta::verDetalleCuenta($nrocuenta);
 
-        if($cuenta){
+        if ($cuenta) {
             return response()->json([
-                'cuenta'=> $cuenta
+                'cuenta' => $cuenta
             ], 200);
-        }else{
+        } else {
             return response()->json([
-                'msg'=> 'no posee cuentas asociada al usuario'
+                'msg' => 'no posee cuentas asociada al usuario'
             ], 200);
         }
     }
 
-    public function store (Request $request){
+    public function store(Request $request)
+    {
 
         $numeroCuentaAleat = Cuenta::nroCuentaAleatorio();
         $cbuAlet = Cuenta::cbuAleatorio();
@@ -62,7 +65,8 @@ class CuentaController extends Controller
         return response()->json($cuenta, 200);
     }
 
-    public function darDeBaja ($idCuenta){
+    public function darDeBaja($idCuenta)
+    {
 
         $cuentaDeshabilitada = Cuenta::findOrFail($idCuenta);
         $cuentaDeshabilitada->estado_id = 2;
@@ -73,18 +77,20 @@ class CuentaController extends Controller
         return response()->json($msg, 200);
     }
 
-    public function modificarAlias(Request $request){
+    public function modificarAlias(Request $request)
+    {
 
         $cuentaAlias = Cuenta::findOrFail($request->idCuenta);
         $cuentaAlias->alias = $request->alias;
         $cuentaAlias->update();
 
-       $cuentaUpdate = Cuenta::verDetalleCuenta($cuentaAlias->numeroCuenta);
+        $cuentaUpdate = Cuenta::verDetalleCuenta($cuentaAlias->numeroCuenta);
 
         return response()->json($cuentaUpdate, 200);
     }
 
-    public function modificarDescripcion(Request $request){
+    public function modificarDescripcion(Request $request)
+    {
 
         $cuentaDescrip = Cuenta::findOrFail($request->idCuenta);
         $cuentaDescrip->descripcion = $request->descripcion;
@@ -94,4 +100,5 @@ class CuentaController extends Controller
 
         return response()->json($cuentaUpdate, 200);
     }
+
 }
