@@ -35,6 +35,7 @@ class TransferenciasController extends Controller
             ->whereRaw('user_id =' . $userId)
             ->whereRaw('banco_id =' . 1)
             ->whereRaw('isCuentaPropia =' . 1)
+            ->whereRaw('estado_id =' . 1)
             ->get();
 
         return response()->json([$cuentas], 200);
@@ -46,6 +47,7 @@ class TransferenciasController extends Controller
         $cuentasPropias = DB::table('cuentas')
             ->whereRaw('persona_id =' . $userId)
             ->whereRaw('isCuentaPropia =' . 1)
+            ->whereRaw('estado_id =' . 1)
             ->get();
 
         return response()->json([$cuentasPropias], 200);
@@ -166,7 +168,8 @@ class TransferenciasController extends Controller
     {
         $transferencias = DB::table('transferencias')
             ->where('transferencias.usuario_origen_id', '=', $idUsuario)
-            ->join('cuentas', 'cuentas.id', '=', 'transferencias.cuenta_dest_id')
+            ->join('cuentas as or', 'or.id', '=', 'transferencias.cuenta_dest_id')
+            ->join('cuentas as dest', 'dest.id', '=', 'transferencias.cuenta_origen_id')
             ->orderByDesc('transferencias.id')
             ->get([
                 'transferencias.id as id',
@@ -176,8 +179,10 @@ class TransferenciasController extends Controller
                 'transferencias.importe as importe',
                 'transferencias.fecha_op as fecha_op',
                 'transferencias.estado as estado',
-                'cuentas.numeroCuenta as numero_cuentaDest',
-                'cuentas.alias as aliasDestino'
+                'or.numeroCuenta as numero_cuentaDest',
+                'or.alias as aliasOrigen',
+                'dest.numeroCuenta as numero_cuentaOrig',
+                'dest.alias as aliasDestino'
             ]);
 
         return response()->json([$transferencias], 200);
