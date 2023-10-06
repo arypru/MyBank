@@ -246,6 +246,7 @@ class Cuenta extends Model
                 'cuentas.numeroCuenta as numeroCuenta',
                 'cuentas.isFavorita as isFavorita',
                 'cuentas.isCuentaPropia as isCuentaPropia',
+                'cuentas.tipocuenta_id as tipoCuenta',
                 'personas.nombre as nombreTitular',
                 'personas.apellido as apellidoTitular',
                 'personas.dni as dniTitular',

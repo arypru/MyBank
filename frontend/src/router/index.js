@@ -13,6 +13,7 @@ import VRouterList from "../views/VRouterList";
 import VUsuario from "../views/VUsuario";
 import VTransferencias from "../views/VTransferencias"
 import VNewTransferencia from "../views/VNewTransferencia"
+import VNewTransfTerceros from "@/views/VNewTransfTerceros";
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,12 @@ const routes = [
                 path: '/nueva-transferencia',
                 name: 'Nueva Transferencia',
                 component: VNewTransferencia,
+                meta: {title: 'Nueva Transferencia', middleware: [auth] }
+            },
+            {
+                path: '/nueva-transferencia-terceros',
+                name: 'Nueva Transferencia',
+                component: VNewTransfTerceros,
                 meta: {title: 'Nueva Transferencia', middleware: [auth] }
             },
             {

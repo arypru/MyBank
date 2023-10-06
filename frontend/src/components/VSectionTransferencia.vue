@@ -28,7 +28,7 @@ export default {
     return {
       itemsCard: [
         { text: `Transferencia` + `\n` + `a mis cuentas`, imagenurl: newtransfer, link: '/nueva-transferencia' },
-        { text: `Transferencia` + `\n` + `a terceros`, imagenurl: transfterceros, link: '/nueva-transferencia' },
+        { text: `Transferencia` + `\n` + `a terceros`, imagenurl: transfterceros, link: '/nueva-transferencia-terceros' },
         { text: `Ver` + `\n` + `Transferencias`, imagenurl: vertransfer, link: '/transferencias/'+`${this.$store.getters.user.id}`},
         //{ text: `Ver` + `\n` + `Beneficiarios`, imagenurl: verbenef, link:''},
       ],
