@@ -11,12 +11,22 @@ const state = {
     ingresos: {},
     egresos: {},
     loadingT: {},
+    beneficiario: {},
+    showBenef: false,
 }
 
 const getters = {
 
+    showBenef(state){
+        return state.showBenef
+    },
+
     loadingT(state){
         return state.loadingT
+    },
+
+    get_beneficiario(state){
+        return state.beneficiario
     },
 
     cuentasMyBank(state){
@@ -62,6 +72,11 @@ const mutations = {
         state.cuentasMyBank = value
     },
 
+    SET_SHOWBENEF(state, value){
+        state.showBenef = value
+    },
+
+
     SET_PROPIAS (state, value) {
         state.cuentasPropias = value
     },
@@ -96,8 +111,13 @@ const mutations = {
 
     SET_LOADINGT (state, value){
         state.loadingT = value
+    },
+
+    SET_BENEFICIARIO (state, value){
+        state.beneficiario = value
     }
 }
+
 const actions = {
     getCuentasMyBank ({commit}, id_user) {
         commit('SET_LOADINGT', true)
@@ -125,12 +145,45 @@ const actions = {
             })
     },
 
+    searchBeneficiarioAlias({commit}, alias){
+        commit('SET_BENEFICIARIO',{})
+        commit('SET_LOADINGT', true)
+        commit('SET_SHOWBENEF', false)
+        axios.get(process.env.VUE_APP_API_URL + '/api/beneficiario-alias/'+`${alias}`)
+            .then (response => {
+                console.log(response)
+                commit('SET_LOADINGT', false)
+                commit('SET_BENEFICIARIO',response.data[0])
+                commit('SET_SHOWBENEF', true)
+            })
+            .catch (error => {
+                console.log(error)
+            })
+    },
+
     transferenciasPropias({commit}, transf){
         commit('SET_LOADINGT', true)
         commit('SET_CUENTA_DESTINO',{})
         commit('SET_CUENTA_ORIGEN', {})
         commit('SET_TRANSF_PROPIAS', {})
         axios.post(process.env.VUE_APP_API_URL + '/api/transf-propias', transf)
+            .then (response => {
+                commit('SET_LOADINGT', false)
+                commit('SET_CUENTA_ORIGEN',response.data[0][0])
+                commit('SET_CUENTA_DESTINO',response.data[1][0])
+                commit('SET_TRANSF_PROPIAS',response.data[2][0])
+            })
+            .catch (error => {
+                console.log(error)
+            })
+    },
+
+    transferenciasTerceros({commit}, transf){
+        commit('SET_LOADINGT', true)
+        commit('SET_CUENTA_DESTINO',{})
+        commit('SET_CUENTA_ORIGEN', {})
+        commit('SET_TRANSF_PROPIAS', {})
+        axios.post(process.env.VUE_APP_API_URL + '/api/transf-terceros', transf)
             .then (response => {
                 commit('SET_LOADINGT', false)
                 commit('SET_CUENTA_ORIGEN',response.data[0][0])
@@ -168,6 +221,10 @@ const actions = {
             .catch (error => {
                 console.log(error)
             })
+    },
+
+    limpiarBeneficiario({commit}){
+        commit('SET_SHOWBENEF', false)
     }
 }
 

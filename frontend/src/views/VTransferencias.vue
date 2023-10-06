@@ -26,9 +26,12 @@ export default {
       headers: [
         { text: 'Nro Operacion', align: 'center', value: 'id' },
         { text: 'Fecha',align: 'center', value: 'fecha_op' },
+        { text: 'Cuenta origen', align: 'center', value: 'numero_cuentaOrig' },
+        { text: 'Origen alias', align: 'center', value: 'aliasOrigen' },
         { text: 'Tipo Transaccion',align: 'center', value: 'tipo_transaccion' },
         { text: 'Referencia',align: 'center', value: 'referencia' },
         { text: 'Descrip', align: 'center',value: 'descripcion' },
+        { text: 'Nro Cuenta Origen',align: 'center', value: 'numero_cuentaDest' },
         { text: 'Destino alias', align: 'center', value: 'aliasDestino' },
         { text: 'Importe', align: 'center', value: 'importe' },
         { text: 'Estado', align: 'center',value: 'estado' },
