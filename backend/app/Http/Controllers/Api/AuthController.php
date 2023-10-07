@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Jenssegers\Agent\Facades\Agent;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CorreoDePrueba;
 
 
 
@@ -50,6 +52,10 @@ class AuthController extends Controller
                 $acceso->user_id = $user->id;
                 $acceso->devices_id = $device->id;
                 $acceso->save();
+
+                $correoDestino = "pruyasaraceli@gmail.com";
+
+                Mail::to($correoDestino)->send(new CorreoDePrueba());
 
                 return response()->json([
                     'message' => "Usuario logueado correctamente",
