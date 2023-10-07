@@ -57,6 +57,7 @@ class Cuenta extends Model
                 ->join('estados','estados.id','=','cuentas.estado_id')
                 ->join('monedas','tipo_cuentas.moneda_id','=','monedas.id')
                 ->where('persona_id', $user->id)
+                ->where('banco_id', 1)
                 ->where('cuentas.estado_id',1)
                 ->orderBy('cuentas.id')
                 ->get();
@@ -238,27 +239,57 @@ class Cuenta extends Model
 
     public static function buscarBeneficiarioAlias($alias){
 
-        $query = DB::table('cuentas')
+        $cuentaBeneficiario = DB::table('cuentas')
             ->select(
                 'cuentas.id as idCuenta',
                 'cuentas.CBU as CBU',
                 'cuentas.alias as alias',
                 'cuentas.numeroCuenta as numeroCuenta',
-                'cuentas.isFavorita as isFavorita',
-                'cuentas.isCuentaPropia as isCuentaPropia',
                 'cuentas.tipocuenta_id as tipoCuenta',
-                'personas.nombre as nombreTitular',
-                'personas.apellido as apellidoTitular',
-                'personas.dni as dniTitular',
+
                 'bancos.nombre as descripcionBanco',
                 'bancos.logoUrl as logoBanco'
             )
-            ->join('personas', 'personas.id', '=', 'cuentas.persona_id')
-            ->join('bancos', 'bancos.id','=', 'cuentas.banco_id')
-            ->join('tipo_cuentas', 'tipo_cuentas.id', '=', 'cuentas.tipocuenta_id')
             ->where('cuentas.alias', 'LIKE', "%$alias%")
-            ->orderBy('cuentas.id')
-            ->get();
+            ->join('bancos', 'bancos.id', '=', 'cuentas.banco_id')
+            ->join('tipo_cuentas','tipo_cuentas.id','=', 'cuentas.tipocuenta_id')
+            ->join('personas','personas.id','=', 'cuentas.persona_id')
+            ->get([
+                'personas.nombre as nombreTitular',
+                'personas.apellido as apellidoTitular',
+                'personas.dni as dniTitular',
+                'cuentas.id as id',
+                'cuentas.CBU as CBU',
+                'cuentas.alias as alias',
+                'bancos.nombre as bancoNombre',
+                'bancos.logoUrl as logoUrl',
+                'cuentas.numeroCuenta as numeroCuenta',
+                'cuentas.saldoDisponible as saldoDisponible',
+                'cuentas.alias as alias',
+                'tipo_cuentas.moneda_id as moneda_id',
+                'tipo_cuentas.acronimo as acronimo',
+                'tipo_cuentas.descripcion as descripcion'
+            ]);
+
+        foreach ($cuentaBeneficiario as $valor) {
+            $query = [
+                'id' => $valor->id,
+                'urlLogo' => asset('storage/'.$valor->logoUrl),
+                'CBU' => $valor->CBU,
+                'bancoNombre' =>$valor->bancoNombre,
+                'numeroCuenta' =>$valor->numeroCuenta,
+                'saldoDisponible' =>$valor->saldoDisponible,
+                'alias' =>$valor->alias,
+                'moneda_id' =>$valor->moneda_id,
+                'acronimo' =>$valor->acronimo,
+                'descripcion' =>$valor->descripcion,
+                'nombreTitular'=>$valor->nombreTitular,
+                'apellidoTitular'=>$valor->apellidoTitular,
+                'dniTitular'=>$valor->dniTitular,
+
+            ];
+        }
+
 
         return $query;
     }

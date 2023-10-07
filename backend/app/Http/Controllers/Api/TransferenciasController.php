@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Decimal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class TransferenciasController extends Controller
 {
@@ -36,19 +37,81 @@ class TransferenciasController extends Controller
             ->whereRaw('banco_id =' . 1)
             ->whereRaw('isCuentaPropia =' . 1)
             ->whereRaw('estado_id =' . 1)
-            ->get();
+            ->join('bancos', 'bancos.id', '=', 'cuentas.banco_id')
+            ->join('tipo_cuentas','tipo_cuentas.id','=', 'cuentas.tipocuenta_id')
+            ->get([
+                'cuentas.id as id',
+                'cuentas.CBU as CBU',
+                'cuentas.alias as alias',
+                'bancos.nombre as bancoNombre',
+                'bancos.logoUrl as logoUrl',
+                'cuentas.numeroCuenta as numeroCuenta',
+                'cuentas.saldoDisponible as saldoDisponible',
+                'cuentas.alias as alias',
+                'tipo_cuentas.moneda_id as moneda_id',
+                'tipo_cuentas.acronimo as acronimo',
+                'tipo_cuentas.descripcion as descripcion'
+            ]);
 
-        return response()->json([$cuentas], 200);
+        foreach ($cuentas as $valor) {
+            $cuentamybank = [
+                'id' => $valor->id,
+                'urlLogo' => asset('storage/'.$valor->logoUrl),
+                'CBU' => $valor->CBU,
+                'alias' =>$valor->alias,
+                'bancoNombre' =>$valor->bancoNombre,
+                'numeroCuenta' =>$valor->numeroCuenta,
+                'saldoDisponible' =>$valor->saldoDisponible,
+                'alias' =>$valor->alias,
+                'moneda_id' =>$valor->moneda_id,
+                'acronimo' =>$valor->acronimo,
+                'descripcion' =>$valor->descripcion,
+            ];
+
+        }
+
+        return response()->json(
+            [$cuentamybank], 200);
     }
 
     public function verCuentasPropias($userId)
     {
 
         $cuentasPropias = DB::table('cuentas')
-            ->whereRaw('persona_id =' . $userId)
+            ->whereRaw('user_id =' . $userId)
             ->whereRaw('isCuentaPropia =' . 1)
             ->whereRaw('estado_id =' . 1)
-            ->get();
+            ->join('bancos', 'bancos.id', '=', 'cuentas.banco_id')
+            ->join('tipo_cuentas','tipo_cuentas.id','=', 'cuentas.tipocuenta_id')
+            ->get([
+                'cuentas.id as id',
+                'cuentas.CBU as CBU',
+                'cuentas.alias as alias',
+                'bancos.nombre as bancoNombre',
+                'bancos.logoUrl as logoUrl',
+                'cuentas.numeroCuenta as numeroCuenta',
+                'cuentas.saldoDisponible as saldoDisponible',
+                'cuentas.alias as alias',
+                'tipo_cuentas.moneda_id as moneda_id',
+                'tipo_cuentas.acronimo as acronimo',
+                'tipo_cuentas.descripcion as descripcion'
+            ]);
+
+
+        foreach ($cuentasPropias as $valor) {
+            $cuentasPropias = [
+                    'id' => $valor->id,
+                    'urlLogo' => asset('storage/'.$valor->logoUrl),
+                    'CBU' => $valor->CBU,
+                    'bancoNombre' =>$valor->bancoNombre,
+                    'numeroCuenta' =>$valor->numeroCuenta,
+                    'saldoDisponible' =>$valor->saldoDisponible,
+                    'alias' =>$valor->alias,
+                    'moneda_id' =>$valor->moneda_id,
+                    'acronimo' =>$valor->acronimo,
+                    'descripcion' =>$valor->descripcion,
+                ];
+        }
 
         return response()->json([$cuentasPropias], 200);
     }
@@ -160,8 +223,49 @@ class TransferenciasController extends Controller
     public function buscarBeneficiarioAlias($alias)
     {
 
-        $beneficiario = Cuenta::buscarBeneficiarioAlias($alias);
-        return $beneficiario;
+        $cuentaBeneficiario = DB::table('cuentas')
+            ->where('cuentas.alias', 'LIKE', "%$alias%")
+            ->join('bancos', 'bancos.id', '=', 'cuentas.banco_id')
+            ->join('tipo_cuentas','tipo_cuentas.id','=', 'cuentas.tipocuenta_id')
+            ->join('personas','personas.id','=', 'cuentas.persona_id')
+            ->get([
+                'personas.nombre as nombreTitular',
+                'personas.apellido as apellidoTitular',
+                'personas.dni as dniTitular',
+                'cuentas.id as id',
+                'cuentas.CBU as CBU',
+                'cuentas.alias as alias',
+                'bancos.nombre as bancoNombre',
+                'bancos.logoUrl as logoUrl',
+                'cuentas.numeroCuenta as numeroCuenta',
+                'cuentas.saldoDisponible as saldoDisponible',
+                'cuentas.alias as alias',
+                'tipo_cuentas.moneda_id as moneda_id',
+                'tipo_cuentas.acronimo as acronimo',
+                'tipo_cuentas.descripcion as descripcion'
+            ]);
+
+        foreach ($cuentaBeneficiario as $valor) {
+            $query = [
+                'id' => $valor->id,
+                'urlLogo' => asset('storage/'.$valor->logoUrl),
+                'CBU' => $valor->CBU,
+                'bancoNombre' =>$valor->bancoNombre,
+                'numeroCuenta' =>$valor->numeroCuenta,
+                'saldoDisponible' =>$valor->saldoDisponible,
+                'alias' =>$valor->alias,
+                'moneda_id' =>$valor->moneda_id,
+                'acronimo' =>$valor->acronimo,
+                'descripcion' =>$valor->descripcion,
+                'nombreTitular'=>$valor->nombreTitular,
+                'apellidoTitular'=>$valor->apellidoTitular,
+                'dniTitular'=>$valor->dniTitular,
+
+            ];
+        }
+
+        return response()->json([$query], 200);
+
     }
 
     public function verTransferencias($idUsuario)
