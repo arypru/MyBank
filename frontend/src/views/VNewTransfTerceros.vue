@@ -39,26 +39,31 @@
                 <v-card
                     @click="seleccionarCuentaOrigen(item)"
                     class="mx-2 my-3 rounded-xl Bricolage-Regular"
-                    max-width="220"
+                    width="320"
                     outlined
                     hover
                     :elevation="hover ? 4 : 2"
                     :class="hover ? 'teal lighten-5' : ''"
 
                 >
-                  <v-list-item three-line>
-                    <v-list-item-content>
-                      <div class="text-overline mb-2">
-                        CA Caja de Ahorro
+                  <v-row class="pa-4" justify="center" no-gutters>
+                    <v-col lg="6" md="6" sm="7" cols="12" align-self="center">
+                      <div class="text-h5">
+                        <p class="Bricolage-SemiBold teal--text text--lighten-1"> $ {{ item.saldoDisponible }}</p>
                       </div>
-                      <v-list-item-title class="text-h5">
-                        <p class="Bricolage-SemiBold teal--text text--lighten-1">{{ item.saldoDisponible }}</p>
-                      </v-list-item-title>
-                      <v-list-item-subtitle>
-                        <p class="Bricolage-SemiBold">{{ item.CBU }}</p>
-                      </v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
+                      <p class="Bricolage-SemiBold">Cuenta N° {{ item.numeroCuenta }}</p>
+
+                    </v-col>
+
+                    <v-col lg="6" md="6" sm="5" cols="12" align-self="start">
+                      <v-img width="120" :src="item.urlLogo"/>
+                    </v-col>
+                  </v-row>
+
+                  <div class="px-4">
+                    {{item.acronimo}} {{item.descripcion}}
+                    <p class="Bricolage-Regular">CBU: {{ item.CBU }}</p>
+                  </div>
                 </v-card>
               </v-hover>
             </div>
@@ -96,27 +101,35 @@
             <v-card
                 @click="seleccionarCuentaDestino(get_beneficiario)"
                 class="mx-2 my-3 rounded-xl Bricolage-Regular"
-                max-width="220"
+                max-width="320"
                 outlined
                 hover
                 :elevation="hover ? 4 : 2"
                 :class="hover ? 'teal lighten-5' : ''"
 
             >
-              <v-list-item three-line>
-                <v-list-item-content>
-                  <div class="text-overline mb-2">
-                    {{ get_beneficiario.numeroCuenta}}
+              <v-row class="pa-4" justify="center" no-gutters>
+                <v-col lg="6" md="6" sm="7" cols="12" align-self="center">
+
+                  {{get_beneficiario.acronimo}} {{get_beneficiario.descripcion}}
+                  <div class="text-h5">
+                    <p class="Bricolage-SemiBold teal--text text--lighten-1"> {{ get_beneficiario.numeroCuenta}}</p>
                   </div>
-                  <v-list-item-title class="text-h5">
-                    <p class="Bricolage-SemiBold teal--text text--lighten-1">{{ get_beneficiario.apellidoTitular }} {{get_beneficiario.nombreTitular}}</p>
-                  </v-list-item-title>
-                  <v-list-item-subtitle>
-                    <p class="Bricolage-SemiBold">{{ get_beneficiario.dniTitular }}</p>
-                    <p class="Bricolage-SemiBold">{{ get_beneficiario.descripcionBanco }}</p>
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
+                </v-col>
+
+                <v-col lg="6" md="6" sm="5" cols="12" align-self="center">
+                  <v-img width="80" :src="get_beneficiario.urlLogo"/>
+                </v-col>
+              </v-row>
+
+              <div class="px-4">
+                <p class="Bricolage-Regular">{{ get_beneficiario.CBU }}</p>
+
+                <p class="Bricolage-SemiBold">{{ get_beneficiario.apellidoTitular }} {{get_beneficiario.nombreTitular}}</p>
+                <p class="Bricolage-SemiBold">{{ get_beneficiario.dniTitular }}</p>
+
+              </div>
+
             </v-card>
           </v-hover>
 

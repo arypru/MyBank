@@ -41,26 +41,33 @@
                 <v-card
                     @click="seleccionarCuentaOrigen(item)"
                     class="mx-2 my-3 rounded-xl Bricolage-Regular"
-                    max-width="220"
+                    width="300"
                     outlined
                     hover
                     :elevation="hover ? 4 : 2"
                     :class="hover ? 'teal lighten-5' : ''"
 
                 >
-                  <v-list-item three-line>
-                    <v-list-item-content>
-                      <div class="text-overline mb-2">
-                        CA Caja de Ahorro
+                  <v-row class="pa-4" justify="center" no-gutters>
+                    <v-col lg="6" md="6" sm="7" cols="12" align-self="center">
+                      <div class="text-h5">
+                        <p class="Bricolage-SemiBold teal--text text--lighten-1"> $ {{ item.saldoDisponible }}</p>
                       </div>
-                      <v-list-item-title class="text-h5">
-                        <p class="Bricolage-SemiBold teal--text text--lighten-1">{{ item.saldoDisponible }}</p>
-                      </v-list-item-title>
-                      <v-list-item-subtitle>
-                        <p class="Bricolage-SemiBold">{{ item.CBU }}</p>
-                      </v-list-item-subtitle>
-                    </v-list-item-content>
-                  </v-list-item>
+                      <p class="Bricolage-SemiBold">Cuenta N° {{ item.numeroCuenta }}</p>
+
+                    </v-col>
+
+                    <v-col lg="6" md="6" sm="5" cols="12" align-self="start">
+                      <v-img width="120" :src="item.urlLogo"/>
+                    </v-col>
+                  </v-row>
+
+                  <div class="px-4">
+                    {{item.acronimo}} {{item.descripcion}}
+                      <p class="Bricolage-Regular">CBU: {{ item.CBU }}</p>
+                  </div>
+
+
                 </v-card>
               </v-hover>
             </div>
@@ -109,27 +116,32 @@
               <v-card
                   @click="seleccionarCuentaDestino(item)"
                   class="mx-2 my-3 rounded-xl Bricolage-Regular"
-                  max-width="220"
+                  width="320"
                   outlined
                   hover
                   :elevation="hover ? 4 : 2"
                   :class="hover ? 'teal lighten-5' : ''"
 
               >
-                <v-list-item three-line>
-                  <v-list-item-content>
-                    <div class="text-overline mb-2">
-                      CA Caja de Ahorro
+                <v-row class="pa-4" justify="center" no-gutters>
+                  <v-col lg="6" md="6" sm="8" cols="12" align-self="center">
+                    <div class="text-h5">
+                      <p class="Bricolage-SemiBold teal--text text--lighten-1"> $ {{ item.saldoDisponible }}</p>
                     </div>
-                    <v-list-item-title class="text-h5">
-                      <p class="Bricolage-SemiBold teal--text text--lighten-1">{{ item.saldoDisponible }}</p>
-                    </v-list-item-title>
-                    <v-list-item-subtitle>
-                      <p class="Bricolage-SemiBold">{{ item.CBU }}</p>
-                      <p class="Bricolage-SemiBold">BanCO</p>
-                    </v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
+                    <p class="Bricolage-SemiBold">Cuenta N° {{ item.numeroCuenta }}</p>
+
+                  </v-col>
+
+                  <v-col lg="6" md="6" sm="4" cols="12" align-self="start">
+                    <v-img  width="80" :src="item.urlLogo"/>
+                  </v-col>
+                </v-row>
+
+                <div class="px-4">
+                  {{item.acronimo}} {{item.descripcion}}
+                  <p class="Bricolage-Regular">CBU: {{ item.CBU }}</p>
+                </div>
+
               </v-card>
             </v-hover>
           </div>
@@ -276,7 +288,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['cuentasMyBank', 'cuentasPropias', 'user', 'transferenciaOrigen','transferenciaDestino','transferenciaPropia','loadingT']),
+    ...mapGetters(['get_logo','cuentasMyBank', 'cuentasPropias', 'user', 'transferenciaOrigen','transferenciaDestino','transferenciaPropia','loadingT']),
   },
 
   methods: {
@@ -289,7 +301,7 @@ export default {
     seleccionarCuentaDestino(item) {
       console.log(item)
       this.transf.cuenta_dest_id = item.id
-      this.transf.moneda_id = item.tipocuenta_id
+      this.transf.moneda_id = item.moneda_id
       this.e6 = 3
     },
 
@@ -329,11 +341,17 @@ export default {
     cargarPaso2() {
       const miArray = this.$store.getters.cuentasPropias;
       const elementoAEliminar = this.transf.cuenta_origen_id;
-      console.log(elementoAEliminar)
-      let respuesta = miArray.filter(item => item.id !== elementoAEliminar);
-      console.log(respuesta)
-      this.cuentasTransferir = respuesta;
-      this.e6 = 2
+
+      console.log(miArray)
+      if (Array.isArray(miArray)) {
+        let respuesta = miArray.filter(item => item.id !== elementoAEliminar);
+        this.cuentasTransferir = respuesta;
+        this.e6 = 2
+      } else {
+        this.cuentasTransferir = miArray;
+        console.error('miArray no es un array.');
+        this.e6 = 2
+      }
     }
   },
 

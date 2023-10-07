@@ -13,6 +13,7 @@ const state = {
     loadingT: {},
     beneficiario: {},
     showBenef: false,
+
 }
 
 const getters = {
@@ -63,8 +64,7 @@ const getters = {
 
     ver_ingresos(state){
         return state.ingresos
-    }
-
+    },
 }
 
 const mutations = {
@@ -115,7 +115,8 @@ const mutations = {
 
     SET_BENEFICIARIO (state, value){
         state.beneficiario = value
-    }
+    },
+
 }
 
 const actions = {
@@ -124,8 +125,9 @@ const actions = {
         commit('SET_MYBANK',{})
         axios.get(process.env.VUE_APP_API_URL + '/api/ver-cuentas-mybank/'+`${id_user}`)
             .then (response => {
+                console.log(response.data)
                 commit('SET_LOADINGT', false)
-                commit('SET_MYBANK',response.data[0])
+                commit('SET_MYBANK',response.data)
             })
             .catch (error => {
                 console.log(error)
@@ -138,7 +140,7 @@ const actions = {
         axios.get(process.env.VUE_APP_API_URL + '/api/ver-cuentas-propias/'+`${id_user}`)
             .then (response => {
                 commit('SET_LOADINGT', false)
-                commit('SET_PROPIAS',response.data[0])
+                commit('SET_PROPIAS',response.data)
             })
             .catch (error => {
                 console.log(error)
