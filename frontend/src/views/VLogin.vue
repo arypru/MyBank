@@ -22,16 +22,20 @@
               @click:prepend-inner="showPasswordLogin = !showPasswordLogin"
           ></v-text-field>
 
-          <v-boton-primario type="submit" textoBoton="Ingresar" textoIcon="mdi-menu-right"/>
+          <v-row justify="center">
+            <v-boton-primario type="submit" textoBoton="Ingresar" textoIcon="mdi-menu-right"/>
+            <v-boton-text link="/recuperar-constrasena" :click="showPasswordLogin" class="block" :texto=botontext
+                          icontext="mdi-cursor-default-click"/>
 
-          <!--<v-boton-text :click="showPasswordLogin" class="block" :texto=botontext icontext="mdi-cursor-default-click"/>-->
+          </v-row>
 
-          <v-alert outlined type="error" border="left" class="my-4 Bricolage-SemiBold"  v-if="incompleteAuth || this.$store.getters.error" >
+          <v-alert outlined type="error" border="left" class="my-4 Bricolage-SemiBold"
+                   v-if="incompleteAuth || this.$store.getters.error">
             <div v-if="incompleteAuth">
               Complete los campos nombre de usuario y contraseña antes de ingresar.
             </div>
             <div v-else>
-              {{this.$store.getters.message}}
+              {{ this.$store.getters.message }}
             </div>
           </v-alert>
 
@@ -59,12 +63,12 @@ import VLabelInput from "../components/VLabelInput";
 import imagenLogin from "../assets/images/login.svg";
 import VLogo from "../components/VLogo";
 //import VBotonSecundario from "../components/VBotonSecundario"
-//import VBotonText from "../components/VBotonText"
+import VBotonText from "../components/VBotonText"
 
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
-  components: {VTextFile, VBotonPrimario, VLabelInput, VLogo},
+  components: {VTextFile, VBotonPrimario, VLabelInput, VLogo, VBotonText},
 
   data() {
     return {
@@ -86,7 +90,7 @@ export default {
     ...mapGetters([
       "error",
       "message",
-        "alerta"
+      "alerta"
     ]),
 
   },
@@ -97,9 +101,9 @@ export default {
     }),
 
     onLogin() {
-      if(this.auth.nombre_user === "" || this.auth.password === ""){
+      if (this.auth.nombre_user === "" || this.auth.password === "") {
         this.incompleteAuth = true;
-      }else{
+      } else {
         this.incompleteAuth = false
         this.login(this.auth);
       }

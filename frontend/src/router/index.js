@@ -14,6 +14,7 @@ import VUsuario from "../views/VUsuario";
 import VTransferencias from "../views/VTransferencias"
 import VNewTransferencia from "../views/VNewTransferencia"
 import VNewTransfTerceros from "@/views/VNewTransfTerceros";
+import VRecuperarContrasena from "@/views/VRecuperarContrasena";
 
 Vue.use(VueRouter)
 
@@ -70,6 +71,13 @@ const routes = [
         name: 'Ingresar',
         component: VLogin,
         meta: { title: 'Ingresar', middleware: [guest]}
+    },
+
+    {
+        path: '/recuperar-constrasena',
+        name: 'Recuperar Contraseña',
+        component: VRecuperarContrasena,
+        meta: { title: 'Recuperar Contraseña', middleware: [guest]}
     },
 
     {
