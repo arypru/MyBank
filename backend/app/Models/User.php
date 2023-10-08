@@ -48,4 +48,9 @@ class User extends Authenticatable
     }
 
 
+    public static function generarCódigoAleatorio(){
+        return mt_rand(1000, 9999); // Genera un número de 4 dígitos
+    }
+
+
 }

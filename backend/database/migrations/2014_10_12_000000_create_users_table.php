@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('nombre_user')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->integer('codigo')->default(0000);;
             $table->string('token')->default("");
             $table->boolean('habilitado')->default(true);
             $table->rememberToken();

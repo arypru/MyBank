@@ -9,6 +9,7 @@ use App\Models\Devices;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Jenssegers\Agent\Facades\Agent;
@@ -53,10 +54,6 @@ class AuthController extends Controller
                 $acceso->devices_id = $device->id;
                 $acceso->save();
 
-                $correoDestino = "pruyasaraceli@gmail.com";
-
-                Mail::to($correoDestino)->send(new CorreoDePrueba());
-
                 return response()->json([
                     'message' => "Usuario logueado correctamente",
                     'user' => $user,
@@ -89,6 +86,24 @@ class AuthController extends Controller
         return response()->json([
             'message' => "Usuario deslogueado con éxito",
             "state" => "error"
+        ],200);
+
+    }
+
+    public function enviarCodigo($email){
+        $codigo = User::generarCódigoAleatorio();
+
+        $user = DB::table('users')
+            ->where('email', $email)
+            ->update(['codigo' => $codigo]
+            );
+
+        //$correoDestino = $email;
+        //Mail::to($correoDestino)->send(new CorreoDePrueba());
+
+        return response()->json([
+            'message' => "Se le ha enviado a su correo con un código de cuatro digitos",
+            "state" => "sucess"
         ],200);
 
     }
