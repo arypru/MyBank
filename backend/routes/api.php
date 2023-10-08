@@ -22,6 +22,11 @@ use App\Http\Controllers\Api\TransferenciasController;
 
 //Persona
 
+
+Route::get('/email-prueba', function () {
+    return view('email');
+});
+
 Route::post('/verificar-dni/{dni}', [PersonaController::class, 'verificar_dni']);
 Route::post('/login', [AuthController::class, 'login']);
 

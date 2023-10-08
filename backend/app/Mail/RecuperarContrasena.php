@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 
-class CorreoDePrueba extends Mailable
+class RecuperarContrasena extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,7 +28,7 @@ class CorreoDePrueba extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Correo De Prueba',
+            subject: 'Recuperar Contraseña',
         );
     }
 

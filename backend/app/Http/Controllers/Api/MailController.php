@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Mail;
 use Illuminate\Http\Request;
-use App\Mail\CorreoDePrueba;
+use App\Mail\RecuperarContrasena;
 
 class MailController extends Controller
 {
@@ -16,7 +16,7 @@ class MailController extends Controller
     {
         $correoDestino = "pruyasaraceli@gmail.com";
 
-        Mail::to($correoDestino)->send(new CorreoDePrueba());
+        Mail::to($correoDestino)->send(new RecuperarContrasena());
 
         return "Correo electrónico enviado con éxito";
     }

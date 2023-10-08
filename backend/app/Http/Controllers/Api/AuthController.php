@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Jenssegers\Agent\Facades\Agent;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\CorreoDePrueba;
+use App\Mail\RecuperarContrasena;
 
 
 
@@ -99,7 +99,7 @@ class AuthController extends Controller
             );
 
         //$correoDestino = $email;
-        //Mail::to($correoDestino)->send(new CorreoDePrueba());
+        //Mail::to($correoDestino)->send(new RecuperarContrasena());
 
         return response()->json([
             'message' => "Se le ha enviado a su correo con un código de cuatro digitos",
