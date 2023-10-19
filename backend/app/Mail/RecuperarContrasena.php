@@ -17,9 +17,10 @@ class RecuperarContrasena extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($nombre, $codigo)
     {
-
+        $this->nombre = $nombre;
+        $this->codigo = $codigo;
     }
 
     /**
@@ -37,8 +38,14 @@ class RecuperarContrasena extends Mailable
      */
     public function content(): Content
     {
+        $nombre = $this->nombre;
+        $codigo = $this->codigo;
+
+        $css =  '<script src="https://cdn.tailwindcss.com"></script>';
+
         return new Content(
             view: 'email',
+            with: ['nombre' => $nombre, 'codigo' => $codigo, 'css' => $css],
         );
     }
 

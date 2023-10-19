@@ -97,7 +97,7 @@ class PersonaController extends Controller
 
             return response()->json([
                 'persona_id' => $personaDireccion,
-                'msg' => 'datos actualizados con éxito'
+                'message' => 'datos actualizados con éxito'
             ], 200);
         }
 

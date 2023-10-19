@@ -30,6 +30,11 @@ Route::get('/email-prueba', function () {
 Route::post('/verificar-dni/{dni}', [PersonaController::class, 'verificar_dni']);
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/enviar-correo/{email}', [AuthController::class, 'enviarCodigo']);
+Route::post('/verificar-codigo', [AuthController::class, 'verificarCodigo']);
+Route::get('/user/{id}', [UserController::class, 'edit']);
+
+
 Route::middleware('auth:sanctum')->group(function ()
 {
     Route::get('/ver-cuentas-usuarios/{id}', [CuentaController::class, 'verTodasLasCuentasUsuario']);
