@@ -41,12 +41,12 @@ class UserController extends Controller
     {
         //busco a la persona
 
-        $persona = DB::table('personas')->whereRaw('dni =' . $request->dni )->value('id');
+        $persona = DB::table('personas')->whereRaw('dni =' . $request->dni)->value('id');
 
         $user = User::create([
             'nombre_user' => $request->nombre_user,
             'email' => $request->email,
-            'password' =>Hash::make($request->password),
+            'password' => Hash::make($request->password),
             'persona_id' => $persona,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
@@ -73,21 +73,27 @@ class UserController extends Controller
         $respuesta = [
             'id' => $user->id,
             'nombre_user' => $user->nombre_user,
-            'email'=> $user->email,
-            'telefono'=>$persona->telefono,
-            'ultima_modificacion'=>$fecha_mod,
-            "alta"=> $user->created_at->format('d/m/Y H:i'),
+            'email' => $user->email,
+            'telefono' => $persona->telefono,
+            'ultima_modificacion' => $fecha_mod,
+            "alta" => $user->created_at->format('d/m/Y H:i'),
         ];
 
-        return response()->json($respuesta,200);
+        return response()->json($respuesta, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-        //
+        $user = DB::table('users')
+            ->where('email', $request->email)
+            ->update(['password' => Hash::make($request->password)]);
+
+        return response()->json([
+            'message' => 'datos actualizados con éxito'
+        ], 200);
     }
 
     /**

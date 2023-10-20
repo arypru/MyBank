@@ -91,20 +91,64 @@ class AuthController extends Controller
     }
 
     public function enviarCodigo($email){
-        $codigo = User::generarCódigoAleatorio();
+
+        if(User::where('email', '=', $email)->exists()){
+
+            $codigo = User::generarCódigoAleatorio();
+
+            $user = DB::table('users')
+                ->where('email', $email)
+                ->update(['codigo' => $codigo]);
+
+            $nombre = DB::table('users')
+                ->where('email', $email)
+                ->get('nombre_user');
+
+            foreach ($nombre as $valor) {
+                $nombre = $valor->nombre_user;
+            }
+
+            $correoDestino = $email;
+            Mail::to($correoDestino)->send(new RecuperarContrasena($nombre, $codigo));
+
+            return response()->json([
+                'message' => "Se le ha enviado a su correo con un código de cuatro digitos",
+                "state" => "sucess"
+            ],200);
+
+        }else{
+
+            return response()->json([
+                'message' => "Correo electronico no encontrado. Vuelva a intentar",
+                "state" => "sucess"
+            ],200);
+        }
+
+
+    }
+
+    public function verificarCodigo(Request $request){
 
         $user = DB::table('users')
-            ->where('email', $email)
-            ->update(['codigo' => $codigo]
-            );
+            ->where('email', $request->email)
+            ->get('codigo');
 
-        //$correoDestino = $email;
-        //Mail::to($correoDestino)->send(new RecuperarContrasena());
+        foreach ($user as $valor) {
+            $codigoTabla = $valor->codigo;
+        }
 
-        return response()->json([
-            'message' => "Se le ha enviado a su correo con un código de cuatro digitos",
-            "state" => "sucess"
-        ],200);
+        if($codigoTabla == $request->codigo){
+            
+            return response()->json([
+                'message' => "Código verificado con exito",
+                "state" => "ok"
+            ],200);
+        }else{
+            return response()->json([
+                'message' => "Código incorrecto, verifique nuevamente",
+                "state" => "no ok"
+            ],200);
+        }
 
     }
 }
