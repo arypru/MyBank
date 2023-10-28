@@ -28,9 +28,20 @@ class AuthController extends Controller
     }
 
 
-    public function login()
+    public function login(Request $request)
     {
-        $user = User::where('nombre_user', request()->nombre_user)->first();
+        //$user = User::where('nombre_user', request()->nombre_user)->first();
+
+
+        $user = DB::table('users')
+            ->whereRaw('nombre_user =' . $request->nombre_user)
+            ->get();
+
+        /*foreach ($nombre as $valor) {
+            $nombre = $valor->nombre_user;
+        }*/
+
+        dd($user);
 
         if(isset($user->id)){
             $user->tokens()->delete();
@@ -65,7 +76,8 @@ class AuthController extends Controller
             }else{
                 return response()->json([
                     'message' => "Error. Contraseña Incorrecta",
-                    "state" => "error"
+                    "state" => "error",
+                    'user' => $user,
                 ],200);
             }
         }else{
@@ -138,7 +150,7 @@ class AuthController extends Controller
         }
 
         if($codigoTabla == $request->codigo){
-            
+
             return response()->json([
                 'message' => "Código verificado con exito",
                 "state" => "ok"

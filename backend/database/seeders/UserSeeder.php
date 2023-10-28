@@ -12,19 +12,19 @@ class UserSeeder extends Seeder
 
         array(
             'persona_id' => 1,
-            'nombre_user' => 'mariaperez27',
+            'nombre_user' => 'mperez',
             'email'=>'mariaperez@gmail.com',
             'password'=>'maria123'),
 
         array(
             'persona_id' => 2,
-            'nombre_user' => 'selenagomex27',
+            'nombre_user' => 'sgomez',
             'email'=>'selenagomex@gmail.com',
             'password'=>'selena123'),
 
         array(
             'persona_id' => 3,
-            'nombre_user' => 'sarabritez48',
+            'nombre_user' => 'sbritez',
             'email'=>'sarabritez@gmail.com',
             'password'=>'sara123'),
 
